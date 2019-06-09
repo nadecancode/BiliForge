@@ -71,8 +71,4 @@ public class LiveListener extends DanmakuAdapter implements Runnable {
         Gift gift = new Gift(giveGiftInfo.getContent().getUsername(), giveGiftInfo.getContent().getGiftName(), Integer.toString(giveGiftInfo.getContent().getUid()), giveGiftInfo.getContent().getCount(), giveGiftInfo.getContent().getPrice());
         LiveModule.getLiveModule().getLive().addLiveObject(gift);
     }
-
-    public void disconnect() {
-        this.receiver.disconnect();
-    }
 }

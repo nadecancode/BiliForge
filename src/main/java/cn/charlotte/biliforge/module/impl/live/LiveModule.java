@@ -39,10 +39,9 @@ public class LiveModule extends Module {
     }
 
     public void update() {
-        if (this.futureTask != null) this.futureTask.cancel(true);
         this.liveListener = new LiveListener(LiveModuleConfig.INSTANCE.roomId);
         this.live.reset();
-        this.liveListener.disconnect();
+        if (this.futureTask != null) this.futureTask.cancel(true);
         this.futureTask = this.executorService.submit(liveListener);
     }
 }
