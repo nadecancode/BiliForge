@@ -7,6 +7,8 @@ package cn.charlotte.biliforge.util.render.colors;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.MathHelper;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.lwjgl.util.Color;
+import org.lwjgl.util.ReadableColor;
 
 
 /**
@@ -32,7 +34,18 @@ public class CustomColor {
         this.a = a;
     }
 
+    public CustomColor(ReadableColor color) {
+        this.r = color.getRed();
+        this.g = color.getGreen();
+        this.b = color.getBlue();
+        this.a = color.getAlpha();
+    }
+
     public CustomColor() {
+        this.r = 0;
+        this.g = 0;
+        this.b = 0;
+        this.a = 255;
     }
 
     public static CustomColor fromString(String string, float a) {
@@ -82,6 +95,12 @@ public class CustomColor {
         }
     }
 
+    public void set(int r, int g, int b) {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+    }
+
     /**
      * applyColor
      * Will set the color to OpenGL's active color
@@ -99,4 +118,56 @@ public class CustomColor {
         return "rgba(" + r + "," + g + "," + b + "," + a + ")";
     }
 
+    public void fromHSB(float hue, float saturation, float brightness) {
+        if (saturation == 0.0F) {
+            r = g = b = (byte) (brightness * 255F + 0.5F);
+        } else {
+            float f3 = (hue - (float) Math.floor(hue)) * 6F;
+            float f4 = f3 - (float) Math.floor(f3);
+            float f5 = brightness * (1.0F - saturation);
+            float f6 = brightness * (1.0F - saturation * f4);
+            float f7 = brightness * (1.0F - saturation * (1.0F - f4));
+            switch ((int) f3) {
+                case 0:
+                    r = (byte) (brightness * 255F + 0.5F);
+                    g = (byte) (f7 * 255F + 0.5F);
+                    b = (byte) (f5 * 255F + 0.5F);
+                    break;
+                case 1:
+                    r = (byte) (f6 * 255F + 0.5F);
+                    g = (byte) (brightness * 255F + 0.5F);
+                    b = (byte) (f5 * 255F + 0.5F);
+                    break;
+                case 2:
+                    r = (byte) (f5 * 255F + 0.5F);
+                    g = (byte) (brightness * 255F + 0.5F);
+                    b = (byte) (f7 * 255F + 0.5F);
+                    break;
+                case 3:
+                    r = (byte) (f5 * 255F + 0.5F);
+                    g = (byte) (f6 * 255F + 0.5F);
+                    b = (byte) (brightness * 255F + 0.5F);
+                    break;
+                case 4:
+                    r = (byte) (f7 * 255F + 0.5F);
+                    g = (byte) (f5 * 255F + 0.5F);
+                    b = (byte) (brightness * 255F + 0.5F);
+                    break;
+                case 5:
+                    r = (byte) (brightness * 255F + 0.5F);
+                    g = (byte) (f5 * 255F + 0.5F);
+                    b = (byte) (f6 * 255F + 0.5F);
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public CustomColor clone() {
+        return new CustomColor(this.r, this.g, this.b, this.a);
+    }
+
+    public ReadableColor toColor() {
+        return new Color((int) this.r, (int) this.g, (int) this.b, (int) this.a);
+    }
 }

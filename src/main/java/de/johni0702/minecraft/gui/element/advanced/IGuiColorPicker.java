@@ -24,18 +24,18 @@
  */
 package de.johni0702.minecraft.gui.element.advanced;
 
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import de.johni0702.minecraft.gui.element.GuiElement;
 import de.johni0702.minecraft.gui.utils.Consumer;
-import org.lwjgl.util.ReadableColor;
 
 public interface IGuiColorPicker<T extends IGuiColorPicker<T>> extends GuiElement<T> {
-    ReadableColor getColor();
+    CustomColor getColor();
 
-    T setColor(ReadableColor color);
+    T setColor(CustomColor color);
 
     boolean isOpened();
 
     T setOpened(boolean opened);
 
-    T onSelection(Consumer<ReadableColor> consumer);
+    T onSelection(Consumer<CustomColor> consumer);
 }

@@ -24,7 +24,7 @@
  */
 package de.johni0702.minecraft.gui.element;
 
-import org.lwjgl.util.ReadableColor;
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 
 public interface IGuiLabel<T extends IGuiLabel<T>> extends GuiElement<T> {
     T setI18nText(String text, Object... args);
@@ -33,11 +33,11 @@ public interface IGuiLabel<T extends IGuiLabel<T>> extends GuiElement<T> {
 
     T setText(String text);
 
-    ReadableColor getColor();
+    CustomColor getColor();
 
-    T setColor(ReadableColor color);
+    T setColor(CustomColor color);
 
-    ReadableColor getDisabledColor();
+    CustomColor getDisabledColor();
 
-    T setDisabledColor(ReadableColor disabledColor);
+    T setDisabledColor(CustomColor disabledColor);
 }

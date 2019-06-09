@@ -24,6 +24,8 @@
  */
 package de.johni0702.minecraft.gui.element.advanced;
 
+import cn.charlotte.biliforge.util.render.colors.CommonColors;
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import de.johni0702.minecraft.gui.GuiRenderer;
 import de.johni0702.minecraft.gui.OffsetGuiRenderer;
 import de.johni0702.minecraft.gui.RenderInfo;
@@ -39,7 +41,10 @@ import de.johni0702.minecraft.gui.utils.Consumer;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.client.gui.FontRenderer;
-import org.lwjgl.util.*;
+import org.lwjgl.util.Dimension;
+import org.lwjgl.util.Point;
+import org.lwjgl.util.ReadableDimension;
+import org.lwjgl.util.ReadablePoint;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -49,7 +54,7 @@ import java.util.function.Function;
 
 public abstract class AbstractGuiDropdownMenu<V, T extends AbstractGuiDropdownMenu<V, T>>
         extends AbstractComposedGuiElement<T> implements IGuiDropdownMenu<V, T>, Clickable {
-    private static final ReadableColor OUTLINE_COLOR = new Color(160, 160, 160);
+    private static final CustomColor OUTLINE_COLOR = new CustomColor(160, 160, 160);
 
     @Getter
     private int selected;
@@ -103,7 +108,7 @@ public abstract class AbstractGuiDropdownMenu<V, T extends AbstractGuiDropdownMe
 
             // Draw box
             renderer.drawRect(0, 0, width, height, OUTLINE_COLOR);
-            renderer.drawRect(1, 1, width - 2, height - 2, ReadableColor.BLACK);
+            renderer.drawRect(1, 1, width - 2, height - 2, CommonColors.BLACK);
             renderer.drawRect(width - height, 0, 1, height, OUTLINE_COLOR);
 
             // Draw triangle
@@ -115,7 +120,7 @@ public abstract class AbstractGuiDropdownMenu<V, T extends AbstractGuiDropdownMe
                 renderer.drawRect(x - layer, y + (tHeight - layer), layer * 2 - 1, 1, OUTLINE_COLOR);
             }
 
-            renderer.drawString(3, height / 2 - fontRenderer.FONT_HEIGHT / 2, ReadableColor.WHITE, toString.apply(getSelectedValue()));
+            renderer.drawString(3, height / 2 - fontRenderer.FONT_HEIGHT / 2, CommonColors.WHITE, toString.apply(getSelectedValue()));
         } else if (renderInfo.layer == 1) {
             ReadablePoint offsetPoint = new Point(0, size.getHeight());
             ReadableDimension offsetSize = new Dimension(size.getWidth(), (fontRenderer.FONT_HEIGHT + 5) * values.length);
@@ -251,8 +256,8 @@ public abstract class AbstractGuiDropdownMenu<V, T extends AbstractGuiDropdownMe
             int height = size.getHeight();
 
             renderer.drawRect(0, 0, width, height, OUTLINE_COLOR);
-            renderer.drawRect(1, 0, width - 2, height - 1, ReadableColor.BLACK);
-            renderer.drawString(3, 2, ReadableColor.WHITE, toString.apply(value));
+            renderer.drawRect(1, 0, width - 2, height - 1, CommonColors.BLACK);
+            renderer.drawString(3, 2, CommonColors.WHITE, toString.apply(value));
         }
 
         @Override

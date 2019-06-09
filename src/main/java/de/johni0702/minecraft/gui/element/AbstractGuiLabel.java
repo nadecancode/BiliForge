@@ -24,6 +24,8 @@
  */
 package de.johni0702.minecraft.gui.element;
 
+import cn.charlotte.biliforge.util.render.colors.CommonColors;
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import de.johni0702.minecraft.gui.GuiRenderer;
 import de.johni0702.minecraft.gui.RenderInfo;
 import de.johni0702.minecraft.gui.container.GuiContainer;
@@ -31,7 +33,6 @@ import lombok.Getter;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.I18n;
 import org.lwjgl.util.Dimension;
-import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.ReadableDimension;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public abstract class AbstractGuiLabel<T extends AbstractGuiLabel<T>> extends Ab
     private String text = "";
 
     @Getter
-    private ReadableColor color = ReadableColor.WHITE, disabledColor = ReadableColor.GREY;
+    private CustomColor color = CommonColors.WHITE, disabledColor = CommonColors.GRAY;
 
     public AbstractGuiLabel() {
     }
@@ -86,13 +87,13 @@ public abstract class AbstractGuiLabel<T extends AbstractGuiLabel<T>> extends Ab
     }
 
     @Override
-    public T setColor(ReadableColor color) {
+    public T setColor(CustomColor color) {
         this.color = color;
         return getThis();
     }
 
     @Override
-    public T setDisabledColor(ReadableColor disabledColor) {
+    public T setDisabledColor(CustomColor disabledColor) {
         this.disabledColor = disabledColor;
         return getThis();
     }

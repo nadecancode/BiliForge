@@ -1,49 +1,25 @@
 package cn.charlotte.biliforge.ui.impl;
 
-import cn.charlotte.biliforge.instance.containers.ModuleContainer;
-import cn.charlotte.biliforge.manager.FrameworkManager;
-import cn.charlotte.biliforge.settings.SettingsContainer;
 import cn.charlotte.biliforge.settings.SettingsRegistry;
-import cn.charlotte.biliforge.util.overlay.Overlay;
 import cn.charlotte.biliforge.util.render.colors.CommonColors;
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
+import com.google.common.collect.Lists;
 import de.johni0702.minecraft.gui.container.AbstractGuiScreen;
 import de.johni0702.minecraft.gui.container.GuiPanel;
 import de.johni0702.minecraft.gui.element.*;
-import de.johni0702.minecraft.gui.element.advanced.GuiTextArea;
+import de.johni0702.minecraft.gui.element.advanced.GuiColorPicker;
 import de.johni0702.minecraft.gui.layout.CustomLayout;
 import de.johni0702.minecraft.gui.layout.HorizontalLayout;
 import de.johni0702.minecraft.gui.layout.VerticalLayout;
-import org.lwjgl.util.ReadableColor;
 
-import java.util.*;
+import java.util.List;
 
 public class SettingsUI extends AbstractGuiScreen<SettingsUI> {
 
-    private String currentSettingsPath = "";
-    private Map<String, SettingsContainer> registeredSettings = new HashMap<>();
-    private List<String> sortedSettings = new ArrayList<>();
-    private HashSet<String> changedSettings = new HashSet<>();
-
-    private GuiTexturedButton applyButton;
-
     public SettingsUI(net.minecraft.client.gui.GuiScreen parent, SettingsRegistry settingsRegistry) {
-        for (ModuleContainer mcn : FrameworkManager.availableModules.values()) {
-            for (SettingsContainer scn : mcn.getRegisteredSettings().values()) {
-                if (!(scn.getHolder() instanceof Overlay)) {
-                    if (!scn.getDisplayPath().equals("")) {
-                        registeredSettings.put(scn.getDisplayPath(), scn);
-                        sortedSettings.add(scn.getDisplayPath());
-                    }
-                }
-            }
-        }
-
-        Collections.sort(sortedSettings);
-        final GuiButton doneButton = new GuiButton(this).setI18nLabel("gui.done").setSize(200, 20).onClick(new Runnable() {
-            @Override
-            public void run() {
-                getMinecraft().displayGuiScreen(parent);
-            }
+        final GuiButton doneButton = new GuiButton(this).setLabel("应用").setSize(200, 20).onClick(() -> {
+            settingsRegistry.save();
+            getMinecraft().displayGuiScreen(parent);
         });
 
         final GuiPanel allElements = new GuiPanel(this).setLayout(new HorizontalLayout().setSpacing(10));
@@ -56,74 +32,96 @@ public class SettingsUI extends AbstractGuiScreen<SettingsUI> {
         int i = 0;
         for (final SettingsRegistry.SettingKey key : settingsRegistry.getSettings()) {
             if (key.getDisplayString() != null) {
-                GuiElement<?> element;
+                List<GuiElement<?>> elements = Lists.newArrayList();
                 if (key.getDefault() instanceof Boolean) {
                     @SuppressWarnings("unchecked") final SettingsRegistry.SettingKey<Boolean> booleanKey = (SettingsRegistry.SettingKey<Boolean>) key;
                     final GuiToggleButton button = new GuiToggleButton<>().setSize(150, 20)
-                            .setLabel(key.getDisplayString()).setSelected(settingsRegistry.get(booleanKey) ? 0 : 1)
+                            .setLabel(key.getDisplayString()).setTooltip(new GuiTextField().setText(booleanKey.getDescription())).setSelected(settingsRegistry.get(booleanKey) ? 0 : 1)
                             .setValues("开启", "关闭");
-                    element = button.onClick(() -> {
-                        settingsRegistry.set(booleanKey, button.getSelected() == 0);
-                        settingsRegistry.save();
-                    });
+                    elements.add(button.onClick(() -> settingsRegistry.set(booleanKey, button.getSelected() == 0)));
                 } else if (key.getDefault() instanceof String) {
                     final SettingsRegistry.SettingKey<String> stringKey = (SettingsRegistry.SettingKey<String>) key;
-                    element = new GuiTextArea()
-                            .setText(new String[]{stringKey.getDisplayString()})
-                            .setHint(stringKey.getDescription())
-                            .setTextColor(CommonColors.WHITE);
-                    element = new GuiTextField()
-                            .setText(stringKey.getKey())
-                            .setSize(200, 20)
-                            .onTextChanged(text -> {
-                                settingsRegistry.set(stringKey, text);
-                                settingsRegistry.save();
-                            });
-
+                    String currentValue = settingsRegistry.get(stringKey);
+                    elements.add(new GuiLabel().setText(stringKey.getDisplayString()));
+                    elements.add(
+                            new GuiPanel()
+                                    .setLayout(new HorizontalLayout().setSpacing(2))
+                                    .addElements(new HorizontalLayout.Data(0.5), newGuiTextField()
+                                            .setText(currentValue)
+                                            .setTooltip(new GuiTextField().setText(stringKey.getDescription()))
+                                            .onTextChanged(text -> settingsRegistry.set(stringKey, text))
+                                    )
+                    );
                 } else if (key.getDefault() instanceof Integer) {
                     final SettingsRegistry.SettingKey<Integer> integerKey = (SettingsRegistry.SettingKey<Integer>) key;
-                    element = new GuiNumberField()
-                            .setValidateOnFocusChange(true)
-                            .setPrecision(1)
-                            .onTextChanged(text -> {
-                                settingsRegistry.set(integerKey, Integer.parseInt(integerKey.getKey()));
-                                settingsRegistry.save();
-                            });
+                    Integer currentValue = settingsRegistry.get(integerKey);
+                    elements.add(new GuiLabel().setText(integerKey.getDisplayString()));
+                    elements.add(
+                            new GuiPanel()
+                                    .setLayout(new HorizontalLayout().setSpacing(2))
+                                    .addElements(new HorizontalLayout.Data(0.5), newGuiNumberField()
+                                            .setValue(currentValue)
+                                            .setTooltip(new GuiTextField().setText(integerKey.getDescription()))
+                                            .onTextChanged(text -> settingsRegistry.set(integerKey, Integer.parseInt(text))))
+                    );
                 } else if (key.getDefault() instanceof Long) {
                     final SettingsRegistry.SettingKey<Long> longKey = (SettingsRegistry.SettingKey<Long>) key;
-                    element = new GuiNumberField()
-                            .setValidateOnFocusChange(true)
-                            .setPrecision(1)
-                            .onTextChanged(text -> {
-                                settingsRegistry.set(longKey, Long.parseLong(longKey.getKey()));
-                                settingsRegistry.save();
-                            });
+                    Long currentValue = settingsRegistry.get(longKey);
+                    elements.add(new GuiLabel().setText(longKey.getDisplayString()));
+                    elements.add(
+                            new GuiPanel()
+                                    .setLayout(new HorizontalLayout().setSpacing(2))
+                                    .addElements(new HorizontalLayout.Data(0.5), newGuiNumberField()
+                                            .setValue(currentValue)
+                                            .setTooltip(new GuiTextField().setText(longKey.getDescription()))
+                                            .onTextChanged(text -> settingsRegistry.set(longKey, Long.parseLong(text))))
+                    );
                 } else if (key.getDefault() instanceof Float) {
                     final SettingsRegistry.SettingKey<Float> floatKey = (SettingsRegistry.SettingKey<Float>) key;
-                    element = new GuiNumberField()
-                            .setValidateOnFocusChange(true)
-                            .setPrecision(1)
-                            .onTextChanged(text -> {
-                                settingsRegistry.set(floatKey, Float.parseFloat(floatKey.getKey()));
-                                settingsRegistry.save();
-                            });
+                    Float currentValue = settingsRegistry.get(floatKey);
+                    elements.add(new GuiLabel().setText(floatKey.getDisplayString()));
+                    elements.add(
+                            new GuiPanel()
+                                    .setLayout(new HorizontalLayout().setSpacing(2))
+                                    .addElements(new HorizontalLayout.Data(0.5), newGuiNumberField()
+                                            .setValue(currentValue)
+                                            .setTooltip(new GuiTextField().setText(floatKey.getDescription()))
+                                            .onTextChanged(text -> settingsRegistry.set(floatKey, Float.parseFloat(text))))
+                    );
                 } else if (key.getDefault() instanceof Double) {
                     final SettingsRegistry.SettingKey<Double> doubleKey = (SettingsRegistry.SettingKey<Double>) key;
-                    element = new GuiNumberField()
-                            .setValidateOnFocusChange(true)
-                            .setPrecision(1)
-                            .onTextChanged(text -> {
-                                settingsRegistry.set(doubleKey, Double.parseDouble(doubleKey.getKey()));
-                                settingsRegistry.save();
-                            });
+                    Double currentValue = settingsRegistry.get(doubleKey);
+                    elements.add(new GuiLabel().setText(doubleKey.getDisplayString()));
+                    elements.add(
+                            new GuiPanel()
+                                    .setLayout(new HorizontalLayout().setSpacing(2))
+                                    .addElements(new HorizontalLayout.Data(0.5), newGuiNumberField()
+                                            .setValue(currentValue)
+                                            .setTooltip(new GuiTextField().setText(doubleKey.getDescription()))
+                                            .onTextChanged(text -> settingsRegistry.set(doubleKey, Double.parseDouble(text))))
+                    );
+                } else if (key.getDefault() instanceof CustomColor) {
+                    final SettingsRegistry.SettingKey<CustomColor> customColorKey = (SettingsRegistry.SettingKey<CustomColor>) key;
+                    CustomColor currentValue = settingsRegistry.get(customColorKey);
+                    elements.add(new GuiLabel().setText(customColorKey.getDisplayString()));
+                    elements.add(
+                            new GuiPanel()
+                                    .setLayout(new HorizontalLayout().setSpacing(2))
+                                    .addElements(new HorizontalLayout.Data(0.5),
+                                            new GuiColorPicker(this)
+                                                    .setColor(currentValue)
+                                                    .setTooltip(new GuiTextField().setText(customColorKey.getDescription()))
+                                                    .onSelection(color -> settingsRegistry.set(customColorKey, color))
+                                    )
+                    );
                 } else {
                     throw new IllegalArgumentException("Type " + key.getDefault().getClass() + " not supported.");
                 }
 
                 if (i++ % 2 == 0) {
-                    leftColumn.addElements(leftHorizontalData, element);
+                    leftColumn.addElements(leftHorizontalData, elements.toArray(new GuiElement<?>[]{}));
                 } else {
-                    rightColumn.addElements(rightHorizontalData, element);
+                    rightColumn.addElements(rightHorizontalData, elements.toArray(new GuiElement<?>[]{}));
                 }
             }
         }
@@ -136,11 +134,19 @@ public class SettingsUI extends AbstractGuiScreen<SettingsUI> {
             }
         });
 
-        setTitle(new GuiLabel().setText("BiliForge Settings").setColor(ReadableColor.CYAN));
+        setTitle(new GuiLabel().setText("BiliForge Settings").setColor(CommonColors.CYAN));
     }
 
     @Override
     protected SettingsUI getThis() {
         return this;
+    }
+
+    private static GuiNumberField newGuiNumberField() {
+        return new GuiNumberField().setMaxLength(2).setSize(20, 20).setValidateOnFocusChange(true);
+    }
+
+    private static GuiTextField newGuiTextField() {
+        return new GuiTextField().setMaxLength(2).setSize(20, 20);
     }
 }

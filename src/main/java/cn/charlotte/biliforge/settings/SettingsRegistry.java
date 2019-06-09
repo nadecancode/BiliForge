@@ -8,11 +8,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Pattern;
 
 public class SettingsRegistry {
     private static final Object NULL_OBJECT = new Object();
     private Map<SettingKey<?>, Object> settings = new ConcurrentHashMap<>();
     private Configuration configuration;
+    private static final Pattern COLOR_HEX = Pattern.compile("(^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)");
 
     public void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
@@ -48,12 +50,17 @@ public class SettingsRegistry {
                 value = configuration.get(key.getCategory(), key.getKey(), (Double) key.getDefault()).getDouble();
             } else if (key.getDefault() instanceof String) {
                 value = configuration.get(key.getCategory(), key.getKey(), (String) key.getDefault()).getString();
+            } else if (key.getDefault() instanceof CustomColor) {
+                String rgbaString = configuration.get(key.getCategory(), key.getKey(), key.getDefault().toString()).getString();
+                String[] rgba = rgbaString.replace("rgba(", "").replace(")", "").split(",");
+                value = new CustomColor(Float.valueOf(rgba[0]), Float.valueOf(rgba[1]), Float.valueOf(rgba[2]), Float.valueOf(rgba[3]));
             } else {
                 throw new IllegalArgumentException("Default type " + key.getDefault().getClass() + " not supported.");
             }
         } else {
             value = NULL_OBJECT;
         }
+
         settings.put(key, value);
     }
 
@@ -83,7 +90,7 @@ public class SettingsRegistry {
         } else if (key.getDefault() instanceof String) {
             configuration.get(key.getCategory(), key.getKey(), (String) key.getDefault()).set((String) value);
         } else if (key.getDefault() instanceof CustomColor) {
-            configuration.get(key.getCategory(), key.getKey(), key.getDefault().toString()).set((String) value);
+            configuration.get(key.getCategory(), key.getKey(), key.getDefault().toString()).set(value.toString());
         } else {
             throw new IllegalArgumentException("Default type " + key.getDefault().getClass() + " not supported.");
         }

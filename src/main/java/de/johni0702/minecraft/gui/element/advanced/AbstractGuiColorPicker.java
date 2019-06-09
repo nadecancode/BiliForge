@@ -47,12 +47,12 @@ public abstract class AbstractGuiColorPicker<T extends AbstractGuiColorPicker<T>
     private static final CustomColor OUTLINE_COLOR = new CustomColor(255, 255, 255);
 
     @Getter
-    private Color color = new Color();
+    private CustomColor color = new CustomColor();
 
     @Getter
     private boolean opened;
 
-    private Consumer<ReadableColor> onSelection;
+    private Consumer<CustomColor> onSelection;
 
     private GuiPicker picker = new GuiPicker();
 
@@ -97,7 +97,7 @@ public abstract class AbstractGuiColorPicker<T extends AbstractGuiColorPicker<T>
         }
     }
 
-    protected void getColorAtPosition(int x, int y, Color color) {
+    protected void getColorAtPosition(int x, int y, CustomColor color) {
         if (x < 0 || y < 0 || x >= PICKER_SIZE || y >= PICKER_SIZE) {
             throw new IndexOutOfBoundsException();
         }
@@ -114,8 +114,8 @@ public abstract class AbstractGuiColorPicker<T extends AbstractGuiColorPicker<T>
     }
 
     @Override
-    public T setColor(ReadableColor color) {
-        this.color.setColor(color);
+    public T setColor(CustomColor color) {
+        this.color = color;
         return getThis();
     }
 
@@ -131,12 +131,12 @@ public abstract class AbstractGuiColorPicker<T extends AbstractGuiColorPicker<T>
     }
 
     @Override
-    public T onSelection(Consumer<ReadableColor> consumer) {
+    public T onSelection(Consumer<CustomColor> consumer) {
         this.onSelection = consumer;
         return getThis();
     }
 
-    public void onSelection(Color oldColor) {
+    public void onSelection(CustomColor oldColor) {
         if (onSelection != null) {
             onSelection.consume(oldColor);
         }
@@ -187,8 +187,8 @@ public abstract class AbstractGuiColorPicker<T extends AbstractGuiColorPicker<T>
             Color color = new Color();
             for (int x = 0; x < PICKER_SIZE; x++) {
                 for (int y = 0; y < PICKER_SIZE; y++) {
-                    getColorAtPosition(x, y, color);
-                    renderer.drawRect(x, y, 1, 1, new CustomColor(0, 0, 0, 255));
+                    getColorAtPosition(x, y, new CustomColor(color));
+                    renderer.drawRect(x, y, 1, 1, new CustomColor());
                 }
             }
         }
@@ -204,7 +204,7 @@ public abstract class AbstractGuiColorPicker<T extends AbstractGuiColorPicker<T>
                 pos.translate(0, -AbstractGuiColorPicker.this.getLastSize().getHeight());
 
                 if (isMouseHovering(pos)) {
-                    Color oldColor = new Color(color);
+                    CustomColor oldColor = color.clone();
                     getColorAtPosition(pos.getX(), pos.getY(), color);
                     dragging = true;
                     onSelection(oldColor);
