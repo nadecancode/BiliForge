@@ -1,11 +1,8 @@
 package cn.charlotte.biliforge.wrapper.bilibili.account.data;
 
-import cn.charlotte.biliforge.wrapper.bilibili.deserialize.type.IntegerElementDeserializer;
-import cn.charlotte.biliforge.wrapper.bilibili.deserialize.type.LongElementDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -18,7 +15,6 @@ public class Card {
 
     @JsonProperty("mid")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @JsonDeserialize(using = LongElementDeserializer.class)
     private Long uid;
 
     @JsonProperty("name")
@@ -43,12 +39,10 @@ public class Card {
 
     @JsonProperty("fans")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @JsonDeserialize(using = IntegerElementDeserializer.class)
     private Integer subscribers;
 
     @JsonProperty("attention")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @JsonDeserialize(using = IntegerElementDeserializer.class)
     private Integer following;
 
 }
