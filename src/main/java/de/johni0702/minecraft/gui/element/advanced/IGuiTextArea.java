@@ -24,9 +24,9 @@
  */
 package de.johni0702.minecraft.gui.element.advanced;
 
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import de.johni0702.minecraft.gui.element.GuiElement;
 import de.johni0702.minecraft.gui.function.Focusable;
-import org.lwjgl.util.ReadableColor;
 
 public interface IGuiTextArea<T extends IGuiTextArea<T>> extends GuiElement<T>, Focusable<T> {
     String[] getText();
@@ -55,9 +55,9 @@ public interface IGuiTextArea<T extends IGuiTextArea<T>> extends GuiElement<T>, 
 
     T setCursorPosition(int x, int y);
 
-    T setTextColor(ReadableColor textColor);
+    T setTextColor(CustomColor textColor);
 
-    T setTextColorDisabled(ReadableColor textColorDisabled);
+    T setTextColorDisabled(CustomColor textColorDisabled);
 
     int getMaxTextWidth();
 

@@ -24,10 +24,10 @@
  */
 package de.johni0702.minecraft.gui.element;
 
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import de.johni0702.minecraft.gui.function.Focusable;
 import de.johni0702.minecraft.gui.utils.Consumer;
 import lombok.NonNull;
-import org.lwjgl.util.ReadableColor;
 
 public interface IGuiTextField<T extends IGuiTextField<T>> extends GuiElement<T>, Focusable<T> {
     /**
@@ -182,11 +182,11 @@ public interface IGuiTextField<T extends IGuiTextField<T>> extends GuiElement<T>
 
     T setI18nHint(String hint, Object... args);
 
-    ReadableColor getTextColor();
+    CustomColor getTextColor();
 
-    T setTextColor(ReadableColor textColor);
+    T setTextColor(CustomColor textColor);
 
-    ReadableColor getTextColorDisabled();
+    CustomColor getTextColorDisabled();
 
-    T setTextColorDisabled(ReadableColor textColorDisabled);
+    T setTextColorDisabled(CustomColor textColorDisabled);
 }

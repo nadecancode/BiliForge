@@ -24,11 +24,11 @@
  */
 package de.johni0702.minecraft.gui.element.advanced;
 
+import cn.charlotte.biliforge.util.render.colors.CommonColors;
 import de.johni0702.minecraft.gui.GuiRenderer;
 import de.johni0702.minecraft.gui.RenderInfo;
 import de.johni0702.minecraft.gui.container.GuiContainer;
 import de.johni0702.minecraft.gui.element.AbstractGuiElement;
-import de.johni0702.minecraft.gui.utils.Colors;
 import org.lwjgl.util.Dimension;
 import org.lwjgl.util.ReadableDimension;
 
@@ -72,7 +72,7 @@ public abstract class AbstractGuiTimelineTime<T extends AbstractGuiTimelineTime<
         String str = String.format("%02d:%02d", time / 1000 / 60, time / 1000 % 60);
         int stringWidth = getMinecraft().fontRendererObj.getStringWidth(str);
         positionX = Math.max(stringWidth / 2, Math.min(size.getWidth() - stringWidth / 2, positionX));
-        renderer.drawCenteredString(positionX, 0, Colors.WHITE, str, true);
+        renderer.drawCenteredString(positionX, 0, CommonColors.WHITE, str, true);
     }
 
     @Override

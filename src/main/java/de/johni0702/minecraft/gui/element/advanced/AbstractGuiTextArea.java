@@ -24,6 +24,8 @@
  */
 package de.johni0702.minecraft.gui.element.advanced;
 
+import cn.charlotte.biliforge.util.render.colors.CommonColors;
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import de.johni0702.minecraft.gui.GuiRenderer;
 import de.johni0702.minecraft.gui.RenderInfo;
 import de.johni0702.minecraft.gui.container.GuiContainer;
@@ -43,8 +45,10 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ChatAllowedCharacters;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Color;
-import org.lwjgl.util.*;
+import org.lwjgl.util.Dimension;
+import org.lwjgl.util.Point;
+import org.lwjgl.util.ReadableDimension;
+import org.lwjgl.util.ReadablePoint;
 
 import java.util.Arrays;
 
@@ -53,12 +57,12 @@ import static net.minecraft.util.MathHelper.clamp_int;
 
 public abstract class AbstractGuiTextArea<T extends AbstractGuiTextArea<T>>
         extends AbstractGuiElement<T> implements Clickable, Typeable, Tickable, IGuiTextArea<T> {
-    private static final ReadableColor BACKGROUND_COLOR = new Color(160, 160, 160);
-    private static final ReadableColor CURSOR_COLOR = new Color(240, 240, 240);
+    private static final CustomColor BACKGROUND_COLOR = new CustomColor(160, 160, 160);
+    private static final CustomColor CURSOR_COLOR = new CustomColor(240, 240, 240);
     private static final int BORDER = 4;
     private static final int LINE_SPACING = 2;
-    public ReadableColor textColorEnabled = new Color(224, 224, 224);
-    public ReadableColor textColorDisabled = new Color(112, 112, 112);
+    public CustomColor textColorEnabled = new CustomColor(224, 224, 224);
+    public CustomColor textColorDisabled = new CustomColor(112, 112, 112);
     @Getter
     private boolean focused;
     @Getter
@@ -456,9 +460,9 @@ public abstract class AbstractGuiTextArea<T extends AbstractGuiTextArea<T>>
 
         // Draw black rect once pixel smaller than gray rect
         renderer.drawRect(0, 0, width, height, BACKGROUND_COLOR);
-        renderer.drawRect(1, 1, width - 2, height - 2, ReadableColor.BLACK);
+        renderer.drawRect(1, 1, width - 2, height - 2, CommonColors.BLACK);
 
-        ReadableColor textColor = isEnabled() ? textColorEnabled : textColorDisabled;
+        CustomColor textColor = isEnabled() ? textColorEnabled : textColorDisabled;
 
         int lineHeight = fontRenderer.FONT_HEIGHT + LINE_SPACING;
         int contentHeight = height - BORDER * 2;
@@ -676,13 +680,13 @@ public abstract class AbstractGuiTextArea<T extends AbstractGuiTextArea<T>>
     }
 
     @Override
-    public T setTextColor(ReadableColor textColor) {
+    public T setTextColor(CustomColor textColor) {
         this.textColorEnabled = textColor;
         return getThis();
     }
 
     @Override
-    public T setTextColorDisabled(ReadableColor textColorDisabled) {
+    public T setTextColorDisabled(CustomColor textColorDisabled) {
         this.textColorDisabled = textColorDisabled;
         return getThis();
     }

@@ -24,6 +24,7 @@
  */
 package de.johni0702.minecraft.gui.element.advanced;
 
+import cn.charlotte.biliforge.util.render.colors.CommonColors;
 import com.google.common.base.Supplier;
 import de.johni0702.minecraft.gui.GuiRenderer;
 import de.johni0702.minecraft.gui.RenderInfo;
@@ -38,7 +39,6 @@ import de.johni0702.minecraft.gui.function.Loadable;
 import de.johni0702.minecraft.gui.function.Tickable;
 import de.johni0702.minecraft.gui.layout.CustomLayout;
 import de.johni0702.minecraft.gui.layout.VerticalLayout;
-import de.johni0702.minecraft.gui.utils.Colors;
 import de.johni0702.minecraft.gui.utils.Consumer;
 import org.lwjgl.util.Dimension;
 import org.lwjgl.util.Point;
@@ -200,12 +200,12 @@ public abstract class AbstractGuiResourceLoadingList
                 int w = size.getWidth();
                 int h = size.getHeight();
                 // Black background
-                renderer.drawRect(0, 0, w, h, Colors.BLACK);
+                renderer.drawRect(0, 0, w, h, CommonColors.BLACK);
                 // Light gray border
-                renderer.drawRect(0, 0, w, 1, Colors.LIGHT_GRAY); // Top
-                renderer.drawRect(0, h - 1, w, 1, Colors.LIGHT_GRAY); // Bottom
-                renderer.drawRect(0, 0, 1, h, Colors.LIGHT_GRAY); // Left
-                renderer.drawRect(w - 1, 0, 1, h, Colors.LIGHT_GRAY); // Right
+                renderer.drawRect(0, 0, w, 1, CommonColors.LIGHT_GRAY); // Top
+                renderer.drawRect(0, h - 1, w, 1, CommonColors.LIGHT_GRAY); // Bottom
+                renderer.drawRect(0, 0, 1, h, CommonColors.LIGHT_GRAY); // Left
+                renderer.drawRect(w - 1, 0, 1, h, CommonColors.LIGHT_GRAY); // Right
             }
             super.draw(renderer, size, renderInfo);
         }

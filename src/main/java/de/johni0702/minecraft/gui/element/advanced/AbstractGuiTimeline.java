@@ -24,16 +24,20 @@
  */
 package de.johni0702.minecraft.gui.element.advanced;
 
+import cn.charlotte.biliforge.util.render.colors.CommonColors;
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import de.johni0702.minecraft.gui.GuiRenderer;
 import de.johni0702.minecraft.gui.RenderInfo;
 import de.johni0702.minecraft.gui.container.GuiContainer;
 import de.johni0702.minecraft.gui.element.AbstractGuiElement;
 import de.johni0702.minecraft.gui.element.GuiTooltip;
 import de.johni0702.minecraft.gui.function.Clickable;
-import de.johni0702.minecraft.gui.utils.Colors;
 import de.johni0702.minecraft.gui.utils.Utils;
 import net.minecraft.util.MathHelper;
-import org.lwjgl.util.*;
+import org.lwjgl.util.Dimension;
+import org.lwjgl.util.Point;
+import org.lwjgl.util.ReadableDimension;
+import org.lwjgl.util.ReadablePoint;
 
 public abstract class AbstractGuiTimeline<T extends AbstractGuiTimeline<T>> extends AbstractGuiElement<T> implements IGuiTimeline<T>, Clickable {
     protected static final int TEXTURE_WIDTH = 64;
@@ -154,7 +158,7 @@ public abstract class AbstractGuiTimeline<T extends AbstractGuiTimeline<T>> exte
         double fractionOfVisible = positionInVisible / visibleLength;
         int positionX = (int) (BORDER_LEFT + fractionOfVisible * (size.getWidth() - BORDER_LEFT - BORDER_RIGHT));
         int height = size.getHeight() / (big ? 3 : 6);
-        ReadableColor color = big ? Colors.LIGHT_GRAY : Colors.WHITE;
+        CustomColor color = big ? CommonColors.LIGHT_GRAY : CommonColors.WHITE;
         renderer.drawRect(positionX, size.getHeight() - BORDER_BOTTOM - height, 1, height, color);
     }
 

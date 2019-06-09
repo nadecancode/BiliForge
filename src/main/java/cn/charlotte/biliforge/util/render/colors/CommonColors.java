@@ -23,5 +23,6 @@ public class CommonColors {
     public static final CustomColor ORANGE = CustomColor.fromString("ff9000", 1);
     public static final CustomColor WHITE = CustomColor.fromString("ffffff", 1);
     public static final CustomColor RAINBOW = new CustomColor(-10, -10, -10);
-
+    public static final CustomColor TRANSPARENT = new CustomColor(0, 0, 0, 0);
+    public static final CustomColor LTGREY = new CustomColor(192, 192, 192);
 }

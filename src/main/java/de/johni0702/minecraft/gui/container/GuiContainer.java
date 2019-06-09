@@ -24,12 +24,12 @@
  */
 package de.johni0702.minecraft.gui.container;
 
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import de.johni0702.minecraft.gui.element.ComposedGuiElement;
 import de.johni0702.minecraft.gui.element.GuiElement;
 import de.johni0702.minecraft.gui.layout.Layout;
 import de.johni0702.minecraft.gui.layout.LayoutData;
 import org.lwjgl.util.Point;
-import org.lwjgl.util.ReadableColor;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -62,7 +62,7 @@ public interface GuiContainer<T extends GuiContainer<T>> extends ComposedGuiElem
 
     T sortElements(Comparator<GuiElement> comparator);
 
-    ReadableColor getBackgroundColor();
+    CustomColor getBackgroundColor();
 
-    T setBackgroundColor(ReadableColor backgroundColor);
+    T setBackgroundColor(CustomColor backgroundColor);
 }

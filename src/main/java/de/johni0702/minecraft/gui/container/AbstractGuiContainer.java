@@ -24,6 +24,7 @@
  */
 package de.johni0702.minecraft.gui.container;
 
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Ordering;
 import de.johni0702.minecraft.gui.GuiRenderer;
@@ -40,7 +41,6 @@ import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.util.ReportedException;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.util.Point;
-import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.ReadableDimension;
 import org.lwjgl.util.ReadablePoint;
 
@@ -60,7 +60,7 @@ public abstract class AbstractGuiContainer<T extends AbstractGuiContainer<T>>
 
     private Layout layout = DEFAULT_LAYOUT;
 
-    private ReadableColor backgroundColor;
+    private CustomColor backgroundColor;
 
     public AbstractGuiContainer() {
     }
@@ -267,12 +267,12 @@ public abstract class AbstractGuiContainer<T extends AbstractGuiContainer<T>>
     }
 
     @Override
-    public ReadableColor getBackgroundColor() {
+    public CustomColor getBackgroundColor() {
         return backgroundColor;
     }
 
     @Override
-    public T setBackgroundColor(ReadableColor backgroundColor) {
+    public T setBackgroundColor(CustomColor backgroundColor) {
         this.backgroundColor = backgroundColor;
         return getThis();
     }

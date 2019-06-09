@@ -24,6 +24,8 @@
  */
 package de.johni0702.minecraft.gui.element;
 
+import cn.charlotte.biliforge.util.render.colors.CommonColors;
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import de.johni0702.minecraft.gui.GuiRenderer;
@@ -45,16 +47,18 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ChatAllowedCharacters;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Color;
-import org.lwjgl.util.*;
+import org.lwjgl.util.Dimension;
+import org.lwjgl.util.Point;
+import org.lwjgl.util.ReadableDimension;
+import org.lwjgl.util.ReadablePoint;
 
 import static net.minecraft.client.renderer.GlStateManager.*;
 import static net.minecraft.util.MathHelper.clamp_int;
 
 public abstract class AbstractGuiTextField<T extends AbstractGuiTextField<T>>
         extends AbstractGuiElement<T> implements Clickable, Tickable, Typeable, IGuiTextField<T> {
-    private static final ReadableColor BORDER_COLOR = new Color(160, 160, 160);
-    private static final ReadableColor CURSOR_COLOR = new Color(240, 240, 240);
+    private static final CustomColor BORDER_COLOR = new CustomColor(160, 160, 160);
+    private static final CustomColor CURSOR_COLOR = new CustomColor(240, 240, 240);
     private static final int BORDER = 4;
 
     // Focus
@@ -80,8 +84,8 @@ public abstract class AbstractGuiTextField<T extends AbstractGuiTextField<T>>
     // Rendering
     private int currentOffset;
     private int blinkCursorTick;
-    private ReadableColor textColorEnabled = new Color(224, 224, 224);
-    private ReadableColor textColorDisabled = new Color(112, 112, 112);
+    private CustomColor textColorEnabled = new CustomColor(224, 224, 224);
+    private CustomColor textColorDisabled = new CustomColor(112, 112, 112);
     private ReadableDimension size = new Dimension(0, 0); // Size of last render
 
     private Consumer<String> textChanged;
@@ -397,7 +401,7 @@ public abstract class AbstractGuiTextField<T extends AbstractGuiTextField<T>>
 
         // Draw black rect once pixel smaller than gray rect
         renderer.drawRect(0, 0, width, height, BORDER_COLOR);
-        renderer.drawRect(1, 1, width - 2, height - 2, ReadableColor.BLACK);
+        renderer.drawRect(1, 1, width - 2, height - 2, CommonColors.BLACK);
 
         if (text.isEmpty() && !isFocused() && !Strings.isNullOrEmpty(hint)) {
             // Draw hint
@@ -407,7 +411,7 @@ public abstract class AbstractGuiTextField<T extends AbstractGuiTextField<T>>
             // Draw text
             String renderText = text.substring(currentOffset);
             renderText = fontRenderer.trimStringToWidth(renderText, width - 2 * BORDER);
-            ReadableColor color = isEnabled() ? textColorEnabled : textColorDisabled;
+            CustomColor color = isEnabled() ? textColorEnabled : textColorDisabled;
             int lineEnd = renderer.drawString(BORDER, height / 2 - fontRenderer.FONT_HEIGHT / 2, color, renderText);
 
             // Draw selection
@@ -608,23 +612,23 @@ public abstract class AbstractGuiTextField<T extends AbstractGuiTextField<T>>
     }
 
     @Override
-    public ReadableColor getTextColor() {
+    public CustomColor getTextColor() {
         return textColorEnabled;
     }
 
     @Override
-    public T setTextColor(ReadableColor textColor) {
+    public T setTextColor(CustomColor textColor) {
         this.textColorEnabled = textColor;
         return getThis();
     }
 
     @Override
-    public ReadableColor getTextColorDisabled() {
+    public CustomColor getTextColorDisabled() {
         return textColorDisabled;
     }
 
     @Override
-    public T setTextColorDisabled(ReadableColor textColorDisabled) {
+    public T setTextColorDisabled(CustomColor textColorDisabled) {
         this.textColorDisabled = textColorDisabled;
         return getThis();
     }

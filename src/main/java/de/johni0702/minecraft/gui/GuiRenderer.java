@@ -24,9 +24,9 @@
  */
 package de.johni0702.minecraft.gui;
 
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.ReadableDimension;
 import org.lwjgl.util.ReadablePoint;
 
@@ -48,26 +48,26 @@ public interface GuiRenderer {
 
     void drawRect(int x, int y, int width, int height, int color);
 
-    void drawRect(int x, int y, int width, int height, ReadableColor color);
+    void drawRect(int x, int y, int width, int height, CustomColor color);
 
     void drawRect(int x, int y, int width, int height, int topLeftColor, int topRightColor, int bottomLeftColor, int bottomRightColor);
 
-    void drawRect(int x, int y, int width, int height, ReadableColor topLeftColor, ReadableColor topRightColor, ReadableColor bottomLeftColor, ReadableColor bottomRightColor);
+    void drawRect(int x, int y, int width, int height, CustomColor topLeftColor, CustomColor topRightColor, CustomColor bottomLeftColor, CustomColor bottomRightColor);
 
     int drawString(int x, int y, int color, String text);
 
-    int drawString(int x, int y, ReadableColor color, String text);
+    int drawString(int x, int y, CustomColor color, String text);
 
     int drawCenteredString(int x, int y, int color, String text);
 
-    int drawCenteredString(int x, int y, ReadableColor color, String text);
+    int drawCenteredString(int x, int y, CustomColor color, String text);
 
     int drawString(int x, int y, int color, String text, boolean shadow);
 
-    int drawString(int x, int y, ReadableColor color, String text, boolean shadow);
+    int drawString(int x, int y, CustomColor color, String text, boolean shadow);
 
     int drawCenteredString(int x, int y, int color, String text, boolean shadow);
 
-    int drawCenteredString(int x, int y, ReadableColor color, String text, boolean shadow);
+    int drawCenteredString(int x, int y, CustomColor color, String text, boolean shadow);
 
 }

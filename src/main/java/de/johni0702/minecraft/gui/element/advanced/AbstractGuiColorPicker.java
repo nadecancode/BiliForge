@@ -24,6 +24,7 @@
  */
 package de.johni0702.minecraft.gui.element.advanced;
 
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import de.johni0702.minecraft.gui.GuiRenderer;
 import de.johni0702.minecraft.gui.OffsetGuiRenderer;
 import de.johni0702.minecraft.gui.RenderInfo;
@@ -43,7 +44,7 @@ import java.util.Collections;
 public abstract class AbstractGuiColorPicker<T extends AbstractGuiColorPicker<T>>
         extends AbstractComposedGuiElement<T> implements IGuiColorPicker<T>, Clickable {
     protected static final int PICKER_SIZE = 100;
-    private static final ReadableColor OUTLINE_COLOR = new Color(255, 255, 255);
+    private static final CustomColor OUTLINE_COLOR = new CustomColor(255, 255, 255);
 
     @Getter
     private Color color = new Color();
@@ -82,7 +83,7 @@ public abstract class AbstractGuiColorPicker<T extends AbstractGuiColorPicker<T>
             // Draw outline
             renderer.drawRect(0, 0, width, height, OUTLINE_COLOR);
             // Draw color
-            renderer.drawRect(1, 1, width - 2, height - 2, color);
+            renderer.drawRect(1, 1, width - 2, height - 2, new CustomColor(0, 0, 0, 255));
         } else if (renderInfo.layer == 1) {
             ReadablePoint offsetPoint = new Point(0, size.getHeight());
             ReadableDimension offsetSize = new Dimension(PICKER_SIZE, PICKER_SIZE);
@@ -187,7 +188,7 @@ public abstract class AbstractGuiColorPicker<T extends AbstractGuiColorPicker<T>
             for (int x = 0; x < PICKER_SIZE; x++) {
                 for (int y = 0; y < PICKER_SIZE; y++) {
                     getColorAtPosition(x, y, color);
-                    renderer.drawRect(x, y, 1, 1, color);
+                    renderer.drawRect(x, y, 1, 1, new CustomColor(0, 0, 0, 255));
                 }
             }
         }

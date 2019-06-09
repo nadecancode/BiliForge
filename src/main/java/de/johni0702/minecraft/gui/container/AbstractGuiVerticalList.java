@@ -24,20 +24,25 @@
  */
 package de.johni0702.minecraft.gui.container;
 
+import cn.charlotte.biliforge.util.render.colors.CommonColors;
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import de.johni0702.minecraft.gui.GuiRenderer;
 import de.johni0702.minecraft.gui.RenderInfo;
 import de.johni0702.minecraft.gui.function.Draggable;
 import de.johni0702.minecraft.gui.layout.CustomLayout;
 import de.johni0702.minecraft.gui.layout.VerticalLayout;
 import lombok.Getter;
-import org.lwjgl.util.*;
+import org.lwjgl.util.Point;
+import org.lwjgl.util.ReadableDimension;
+import org.lwjgl.util.ReadablePoint;
+import org.lwjgl.util.WritableDimension;
 
-import static de.johni0702.minecraft.gui.utils.Colors.TRANSPARENT;
-import static org.lwjgl.util.ReadableColor.BLACK;
+import static cn.charlotte.biliforge.util.render.colors.CommonColors.BLACK;
+import static cn.charlotte.biliforge.util.render.colors.CommonColors.TRANSPARENT;
 
 public abstract class AbstractGuiVerticalList<T extends AbstractGuiVerticalList<T>> extends AbstractGuiScrollable<T>
         implements Draggable {
-    public static final ReadableColor BACKGROUND = new Color(0, 0, 0, 150);
+    public static final CustomColor BACKGROUND = new CustomColor(0, 0, 0, 150);
 
     @Getter
     private final VerticalLayout listLayout = new VerticalLayout().setSpacing(3);
@@ -107,9 +112,9 @@ public abstract class AbstractGuiVerticalList<T extends AbstractGuiVerticalList<
                 int sliderY = getOffsetY() * height / contentHeight;
                 int sliderSize = height * height / contentHeight;
                 // Draw slider, with shadows
-                renderer.drawRect(sliderX, sliderY, 6, sliderSize, Color.LTGREY); // Slider
-                renderer.drawRect(sliderX + 5, sliderY, 1, sliderSize, Color.GREY); // Right shadow
-                renderer.drawRect(sliderX, sliderY + sliderSize - 1, 6, 1, Color.GREY); // Bottom shadow
+                renderer.drawRect(sliderX, sliderY, 6, sliderSize, CommonColors.LTGREY); // Slider
+                renderer.drawRect(sliderX + 5, sliderY, 1, sliderSize, CommonColors.GRAY); // Right shadow
+                renderer.drawRect(sliderX, sliderY + sliderSize - 1, 6, 1, CommonColors.GRAY); // Bottom shadow
             }
         }
     }

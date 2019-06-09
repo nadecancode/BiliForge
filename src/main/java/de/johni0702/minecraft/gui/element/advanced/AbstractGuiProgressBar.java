@@ -24,6 +24,7 @@
  */
 package de.johni0702.minecraft.gui.element.advanced;
 
+import cn.charlotte.biliforge.util.render.colors.CommonColors;
 import de.johni0702.minecraft.gui.GuiRenderer;
 import de.johni0702.minecraft.gui.RenderInfo;
 import de.johni0702.minecraft.gui.container.GuiContainer;
@@ -32,7 +33,6 @@ import lombok.Getter;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.I18n;
 import org.lwjgl.util.Dimension;
-import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.ReadableDimension;
 
 public abstract class AbstractGuiProgressBar<T extends AbstractGuiProgressBar<T>> extends AbstractGuiElement<T> implements IGuiProgressBar<T> {
@@ -78,12 +78,12 @@ public abstract class AbstractGuiProgressBar<T extends AbstractGuiProgressBar<T>
         int barTotalWidth = width - 2 * BORDER;
         int barDoneWidth = (int) (barTotalWidth * progress);
 
-        renderer.drawRect(0, 0, width, height, ReadableColor.BLACK); // Border
-        renderer.drawRect(BORDER, BORDER, barTotalWidth, height - 2 * BORDER, ReadableColor.WHITE); // Background
-        renderer.drawRect(BORDER, BORDER, barDoneWidth, height - 2 * BORDER, ReadableColor.GREY); // Progress
+        renderer.drawRect(0, 0, width, height, CommonColors.BLACK); // Border
+        renderer.drawRect(BORDER, BORDER, barTotalWidth, height - 2 * BORDER, CommonColors.WHITE); // Background
+        renderer.drawRect(BORDER, BORDER, barDoneWidth, height - 2 * BORDER, CommonColors.GRAY); // Progress
 
         String text = String.format(label, (int) (progress * 100));
-        renderer.drawCenteredString(width / 2, size.getHeight() / 2 - fontRenderer.FONT_HEIGHT / 2, ReadableColor.BLACK, text);
+        renderer.drawCenteredString(width / 2, size.getHeight() / 2 - fontRenderer.FONT_HEIGHT / 2, CommonColors.BLACK, text);
     }
 
     @Override
