@@ -10,5 +10,5 @@
 * [Jackson](https://github.com/FasterXML/jackson) **方便我解析API的Json**
 * [Lombok](https://github.com/rzwitserloot/lombok) **我寻思这玩意干什么的就不用我说了吧**
 * [OkHttpClient](https://github.com/square/okhttp) **我懒得用 Java 自带的API来写**
-
+* [EagletTask](https://github.com/IzzelAliz/EagletCore/) **超方便的下载文件用的工具**
 

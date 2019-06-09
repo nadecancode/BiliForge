@@ -34,9 +34,9 @@ public class BiliForge {
     public static final String MODID = "BiliForge";
     public static final File MOD_STORAGE_ROOT = new File("biliforge");
     public static final File MOD_ASSETS_ROOT = new File(MOD_STORAGE_ROOT + "\\assets");
-    static final String NAME = "BiliForge";
-    static final String VERSION = "1.0";
-    static final String ACCEPTED_VERSIONS = "[1.8.9]";
+    public static final String NAME = "BiliForge";
+    public static final String VERSION = "1.0.0 - Beta";
+    public static final String ACCEPTED_VERSIONS = "[1.8.9]";
     @Mod.Instance(BiliForge.MODID)
     @Getter
     private static BiliForge instance;
