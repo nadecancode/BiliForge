@@ -1,8 +1,8 @@
-
 // For those who want the bleeding edge
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
@@ -10,9 +10,24 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
     }
+
 }
+
+plugins {
+    id 'java'
+    id 'idea'
+    id 'com.github.johnrengelman.shadow' version '1.2.4'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+apply plugin: 'java'
+apply plugin: 'idea'
 apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 /*
 // for people who want stable - not yet functional for MC 1.8.8 - we require the forgegradle 2.1 snapshot
@@ -21,13 +36,37 @@ plugins {
 }
 */
 version = "1.0"
-group= "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "modid"
+group= "cn.charlotte.biliforge" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "BiliForge"
+compileJava.options.encoding = 'UTF-8'
+
+configurations {
+    embed
+    compile.extendsFrom(embed)
+    all {
+        resolutionStrategy.dependencySubstitution {
+            substitute module('org.apache.httpcomponents:httpclient:4.5.2') with module ('org.apache.httpcomponents:httpclient:4.5.6')
+            substitute module('org.apache.httpcomponents:httpcore:4.4.4') with module ('org.apache.httpcomponents:httpcore:4.4.10')
+            substitute module('org.apache.httpcomponents:httpclient:4.3.3') with module ('org.apache.httpcomponents:httpclient:4.5.6')
+            substitute module('org.apache.httpcomponents:httpcore:4.3.2') with module ('org.apache.httpcomponents:httpcore:4.4.4')
+            substitute module('org.slf4j:log4j-over-slf4j:1.7.21') with module('log4j:log4j:1.2.17')
+            substitute module('commons-codec:commons-codec:1.6') with module('commons-codec:commons-codec:1.10')
+            substitute module('commons-codec:commons-codec:1.9') with module('commons-codec:commons-codec:1.10')
+            substitute module('commons-io:commons-io:2.4') with module('commons-io:commons-io:2.5')
+            substitute module('commons-logging:commons-logging:1.1.3') with module('commons-logging:commons-logging:1.2')
+            substitute module('org.slf4j:jcl-over-slf4j:1.7.21') with module('commons-logging:commons-logging:1.2')
+        }
+    }
+}
+
 
 minecraft {
     version = "1.8.9-11.15.1.1722"
     runDir = "run"
     
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
     // the mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   snapshot are built nightly.
     // stable_#            stables are built at the discretion of the MCP team.
@@ -42,7 +81,7 @@ dependencies {
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
     //compile "some.group:artifact:version"
-      
+
     // real examples
     //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
@@ -58,25 +97,71 @@ dependencies {
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+    compile 'org.projectlombok:lombok:1.18.6'
+    embed group: 'com.google.code.gson', name: 'gson', version: '2.7'
+    embed 'com.squareup.okhttp3:okhttp:3.12.0'
+    embed group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+    embed group: 'net.sourceforge.htmlunit', name: 'htmlunit', version: '2.23'
+    embed group: 'org.jetbrains', name: 'annotations', version: '13.0'
+    embed group: 'net.sourceforge.tess4j', name: 'tess4j', version: '3.2.1'
+}
 
+jar {
+    from configurations.embed.collect {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/services/*'
+        exclude 'versionchanges.txt'
+        exclude 'about.html'
+        it.isDirectory() ? it : zipTree(it)
+    }
 }
 
 processResources
-{
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+        {
+            // this will ensure that this task is redone when the versions change.
+            inputs.property "version", project.version
+            inputs.property "mcversion", project.minecraft.version
 
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
-}
+            // replace stuff in mcmod.info, nothing else
+            from(sourceSets.main.resources.srcDirs) {
+                include 'mcmod.info'
+
+                // replace version and mcversion
+                expand 'version':project.version, 'mcversion':project.minecraft.version
+            }
+
+            // copy everything else, thats not the mcmod.info
+            from(sourceSets.main.resources.srcDirs) {
+                exclude 'mcmod.info'
+            }
+        }
+
+processResources
+        {
+            // this will ensure that this task is redone when the versions change.
+            inputs.property "version", project.version
+            inputs.property "mcversion", project.minecraft.version
+
+            // replace stuff in mcmod.info, nothing else
+            from(sourceSets.main.resources.srcDirs) {
+                include 'mcmod.info'
+
+                // replace version and mcversion
+                expand 'version':project.version, 'mcversion':project.minecraft.version
+            }
+
+            // copy everything else, thats not the mcmod.info
+            from(sourceSets.main.resources.srcDirs) {
+                exclude 'mcmod.info'
+            }
+        }
