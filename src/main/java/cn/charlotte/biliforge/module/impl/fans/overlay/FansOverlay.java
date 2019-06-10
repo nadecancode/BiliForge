@@ -13,10 +13,6 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 public class FansOverlay extends Overlay {
 
-    public FansOverlay() {
-        super();
-    }
-
     @SubscribeEvent
     public void render(RenderGameOverlayEvent event) {
         if (event.type == RenderGameOverlayEvent.ElementType.TEXT && !event.isCancelable()) {

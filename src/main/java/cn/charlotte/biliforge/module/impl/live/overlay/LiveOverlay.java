@@ -15,10 +15,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LiveOverlay extends Overlay {
 
-    public LiveOverlay() {
-        super();
-    }
-
     @SubscribeEvent
     public void render(RenderGameOverlayEvent event) {
         if (!LiveModuleConfig.INSTANCE.live.getValue()) return;

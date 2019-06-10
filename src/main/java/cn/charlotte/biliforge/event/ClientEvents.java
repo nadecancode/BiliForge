@@ -1,6 +1,7 @@
 package cn.charlotte.biliforge.event;
 
 import cn.charlotte.biliforge.manager.FrameworkManager;
+import cn.charlotte.biliforge.overlay.Overlay;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -17,6 +18,7 @@ public class ClientEvents {
     @SubscribeEvent()
     public void onTick(TickEvent.ClientTickEvent e) {
         if (Minecraft.getMinecraft().thePlayer == null) return;
+        Overlay.refresh();
         FrameworkManager.triggerKeyPress();
     }
 
