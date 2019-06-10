@@ -14,6 +14,7 @@ import net.minecraft.command.ICommand;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -49,6 +50,9 @@ public class BiliForge {
         //DependencyInjector.injectDependencies();
         MinecraftForge.EVENT_BUS.register(new ClientEvents());
         this.settingsRegistry = new SettingsRegistry();
+        Configuration config = new Configuration(event.getSuggestedConfigurationFile());
+        config.load();
+        settingsRegistry.setConfiguration(config);
         ModuleManager.registerModules();
         FrameworkManager.startModules();
     }
