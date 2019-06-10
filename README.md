@@ -7,7 +7,7 @@
         <a href = "#introduction">项目介绍</a>&nbsp;&nbsp;
         <a href = "#statistics">项目统计</a>&nbsp;&nbsp;
         <a href = "#download">项目下载</a>&nbsp;&nbsp;
-        <a href = "#libraries>项目依赖</a>&nbsp;&nbsp;
+        <a href = "#libraries">项目依赖</a>&nbsp;&nbsp;
         <a href = "#contributors">项目贡献者</a>&nbsp;&nbsp;
         <a href = "#license">开源协议</a>
     </h4>
@@ -55,7 +55,7 @@
 * [Jackson](https://github.com/FasterXML/jackson) **方便我解析API的Json**
 * [Lombok](https://github.com/rzwitserloot/lombok) **我寻思这玩意干什么的就不用我说了吧**
 * [OkHttpClient](https://github.com/square/okhttp) **我懒得用 Java 自带的API来写**
-* [EagletTask](https://github.com/IzzelAliz/EagletCore/) **超方便的下载文件用的工具**
+* [EagletCore](https://github.com/IzzelAliz/EagletCore/) **超方便的下载文件用的工具**
 ---
 
 <a name = "contributors"></a>
@@ -68,7 +68,7 @@
 <a name = "license"></a>
 开源协议
 ---
-本项目使用 **MPL-2.0** 协议开源 如需要做出任何改动请仔细阅读协议内容
+本项目使用 **MPL-2.0** 协议开源, 请仔细阅读协议内容
 ---
 
 如果喜欢这个项目请**务必**给 **他/她/它** 一个 **[★](https://github.com/ThatKawaiiAllen/BiliForge/stargazers)**, 我求求你了
