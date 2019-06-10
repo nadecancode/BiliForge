@@ -1,9 +1,12 @@
 # BiliForge 
-[![](https://img.shields.io/github/downloads/ThatKawaiiAllen/BiliForge/total.svg)](https://github.com/ThatKawaiiAllen/BiliForge/releases)
-[![](https://img.shields.io/github/issues/ThatKawaiiAllen/BiliForge.svg)](https://github.com/ThatKawaiiAllen/BiliForge/issues)
-[![](https://img.shields.io/github/forks/ThatKawaiiAllen/BiliForge.svg)](https://github.com/ThatKawaiiAllen/BiliForge/network/members)
-[![](https://img.shields.io/github/stars/ThatKawaiiAllen/BiliForge.svg)](https://github.com/ThatKawaiiAllen/BiliForge/stargazers)
-[![](https://img.shields.io/github/license/ThatKawaiiAllen/BiliForge.svg)](https://github.com/ThatKawaiiAllen/BiliForge/blob/master/LICENSE)
+[![](https://img.shields.io/github/downloads/ThatKawaiiAllen/BiliForge/total.svg?style=flat-square)](https://github.com/ThatKawaiiAllen/BiliForge/releases)
+[![](https://img.shields.io/github/issues/ThatKawaiiAllen/BiliForge.svg?style=flat-square)](https://github.com/ThatKawaiiAllen/BiliForge/issues)
+[![](https://img.shields.io/github/forks/ThatKawaiiAllen/BiliForge.svg?style=flat-square)](https://github.com/ThatKawaiiAllen/BiliForge/network/members)
+[![](https://img.shields.io/github/release/ThatKawaiiAllen/BiliForge.svg?style=flat-square)](https://github.com/ThatKawaiiAllen/BiliForge/tags)
+[![](https://img.shields.io/github/stars/ThatKawaiiAllen/BiliForge.svg?style=flat-square)](https://github.com/ThatKawaiiAllen/BiliForge/stargazers)
+[![](https://img.shields.io/github/license/ThatKawaiiAllen/BiliForge.svg?style=flat-square)](https://github.com/ThatKawaiiAllen/BiliForge/blob/master/LICENSE)
+
+[![](https://ci.thatkawaiiallen.me/job/BiliForge/badge/icon?style=flat-square)](https://ci.thatkawaiiallen.me/job/BiliForge/lastSuccessfulBuild/)
 
 ## 显示一些能在 [Bilibili](https://www.bilibili.com) 获取到的的基本信息并把他们用 GUI / Overlay 来进行呈现
 
