@@ -24,6 +24,7 @@
  */
 package de.johni0702.minecraft.gui;
 
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import lombok.NonNull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -116,7 +117,7 @@ public class MinecraftGuiRenderer implements GuiRenderer {
     }
 
     @Override
-    public void drawRect(int x, int y, int width, int height, ReadableColor color) {
+    public void drawRect(int x, int y, int width, int height, CustomColor color) {
         drawRect(x, y, width, height, color(color));
     }
 
@@ -126,7 +127,7 @@ public class MinecraftGuiRenderer implements GuiRenderer {
     }
 
     @Override
-    public void drawRect(int x, int y, int width, int height, ReadableColor tl, ReadableColor tr, ReadableColor bl, ReadableColor br) {
+    public void drawRect(int x, int y, int width, int height, CustomColor tl, CustomColor tr, CustomColor bl, CustomColor br) {
         disableTexture2D();
         enableBlend();
         disableAlpha();
@@ -151,7 +152,7 @@ public class MinecraftGuiRenderer implements GuiRenderer {
     }
 
     @Override
-    public int drawString(int x, int y, ReadableColor color, String text) {
+    public int drawString(int x, int y, CustomColor color, String text) {
         return drawString(x, y, color(color), text);
     }
 
@@ -161,7 +162,7 @@ public class MinecraftGuiRenderer implements GuiRenderer {
     }
 
     @Override
-    public int drawCenteredString(int x, int y, ReadableColor color, String text) {
+    public int drawCenteredString(int x, int y, CustomColor color, String text) {
         return drawCenteredString(x, y, color(color), text);
     }
 
@@ -174,7 +175,7 @@ public class MinecraftGuiRenderer implements GuiRenderer {
     }
 
     @Override
-    public int drawString(int x, int y, ReadableColor color, String text, boolean shadow) {
+    public int drawString(int x, int y, CustomColor color, String text, boolean shadow) {
         return drawString(x, y, color(color), text, shadow);
     }
 
@@ -186,18 +187,18 @@ public class MinecraftGuiRenderer implements GuiRenderer {
     }
 
     @Override
-    public int drawCenteredString(int x, int y, ReadableColor color, String text, boolean shadow) {
+    public int drawCenteredString(int x, int y, CustomColor color, String text, boolean shadow) {
         return drawCenteredString(x, y, color(color), text, shadow);
     }
 
-    private int color(ReadableColor color) {
-        return color.getAlpha() << 24
-                | color.getRed() << 16
-                | color.getGreen() << 8
-                | color.getBlue();
+    private int color(CustomColor color) {
+        return ((int) color.a) << 24
+                | ((int) color.r) << 16
+                | ((int) color.g) << 8
+                | (int) color.b;
     }
 
-    private ReadableColor color(int color) {
-        return new Color((color >> 16) & 0xff, (color >> 8) & 0xff, color & 0xff, (color >> 24) & 0xff);
+    private CustomColor color(int color) {
+        return new CustomColor(new Color((color >> 16) & 0xff, (color >> 8) & 0xff, color & 0xff, (color >> 24) & 0xff));
     }
 }

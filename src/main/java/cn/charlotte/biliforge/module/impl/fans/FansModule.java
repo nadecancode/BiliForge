@@ -4,7 +4,6 @@ import cn.charlotte.biliforge.instance.Module;
 import cn.charlotte.biliforge.interfaces.annotations.ModuleInfo;
 import cn.charlotte.biliforge.module.impl.fans.overlay.FansOverlay;
 import cn.charlotte.biliforge.module.impl.fans.settings.FansModuleConfig;
-import cn.charlotte.biliforge.util.mouse.Priority;
 import lombok.Getter;
 
 import java.util.concurrent.Executors;
@@ -23,6 +22,6 @@ public class FansModule extends Module {
     public void onEnable() {
         fansModule = this;
         this.registerSettings(FansModuleConfig.class);
-        this.registerOverlay(new FansOverlay(), Priority.NORMAL);
+        this.registerOverlay(new FansOverlay());
     }
 }

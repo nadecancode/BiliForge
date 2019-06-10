@@ -170,4 +170,20 @@ public class CustomColor {
     public ReadableColor toColor() {
         return new Color((int) this.r, (int) this.g, (int) this.b, (int) this.a);
     }
+
+    public int getRed() {
+        return (int) this.r;
+    }
+
+    public int getBlue() {
+        return (int) this.b;
+    }
+
+    public int getGreen() {
+        return (int) this.g;
+    }
+
+    public int getAlpha() {
+        return (int) this.a;
+    }
 }

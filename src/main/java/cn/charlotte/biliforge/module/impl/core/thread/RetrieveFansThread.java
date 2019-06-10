@@ -20,10 +20,10 @@ public class RetrieveFansThread extends Thread {
     public void run() {
         while (true) {
             BilibiliAccountInfo original = CoreModule.getCoreModule().getBilibiliAccountInfo();
-            if (!NumberUtils.isNumber(CoreModuleConfig.INSTANCE.uid)) {
+            if (!NumberUtils.isNumber(CoreModuleConfig.INSTANCE.uid.getValue())) {
                 BiliForge.getInstance().sendMessage(ChatColor.RED + "UID必须全部是数, 我求求你看一下怎么用吧");
             } else {
-                BilibiliAccountInfo bilibiliAccountInfo = new BilibiliConnection(Long.parseLong(CoreModuleConfig.INSTANCE.uid)).makeConnection();
+                BilibiliAccountInfo bilibiliAccountInfo = new BilibiliConnection(Long.parseLong(CoreModuleConfig.INSTANCE.uid.getValue())).makeConnection();
                 CoreModule.getCoreModule().setBilibiliAccountInfo(bilibiliAccountInfo);
 
                 if (original != null && !bilibiliAccountInfo.getData().getCard().getUid().equals(original.getData().getCard().getUid())) {
@@ -31,12 +31,12 @@ public class RetrieveFansThread extends Thread {
                     MinecraftForge.EVENT_BUS.post(event);
                     if (event.isCanceled()) {
                         CoreModule.getCoreModule().setBilibiliAccountInfo(original);
-                        CoreModuleConfig.INSTANCE.uid = Long.toString(original.getData().getCard().getUid());
+                        CoreModuleConfig.INSTANCE.uid.setValue(Long.toString(original.getData().getCard().getUid()));
                     }
                 }
             }
 
-            Thread.sleep(TimeUnit.SECONDS.toMillis(CoreModuleConfig.INSTANCE.interval));
+            Thread.sleep(TimeUnit.SECONDS.toMillis(CoreModuleConfig.INSTANCE.interval.getValue()));
         }
     }
 

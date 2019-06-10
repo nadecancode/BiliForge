@@ -24,6 +24,7 @@
  */
 package de.johni0702.minecraft.gui.popup;
 
+import cn.charlotte.biliforge.util.render.colors.CommonColors;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
 import de.johni0702.minecraft.gui.container.GuiContainer;
@@ -33,7 +34,6 @@ import de.johni0702.minecraft.gui.element.GuiElement;
 import de.johni0702.minecraft.gui.element.GuiLabel;
 import de.johni0702.minecraft.gui.function.Typeable;
 import de.johni0702.minecraft.gui.layout.VerticalLayout;
-import de.johni0702.minecraft.gui.utils.Colors;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -68,13 +68,13 @@ public class GuiInfoPopup extends AbstractGuiPopup<GuiInfoPopup> implements Type
     public static GuiInfoPopup open(GuiContainer container, String... info) {
         GuiElement[] labels = new GuiElement[info.length];
         for (int i = 0; i < info.length; i++) {
-            labels[i] = new GuiLabel().setI18nText(info[i]).setColor(Colors.BLACK);
+            labels[i] = new GuiLabel().setI18nText(info[i]).setColor(CommonColors.BLACK);
         }
         return open(container, labels);
     }
 
     public static GuiInfoPopup open(GuiContainer container, GuiElement... info) {
-        GuiInfoPopup popup = new GuiInfoPopup(container).setBackgroundColor(Colors.DARK_TRANSPARENT);
+        GuiInfoPopup popup = new GuiInfoPopup(container).setBackgroundColor(CommonColors.DARK_TRANSPARENT);
         popup.getInfo().addElements(new VerticalLayout.Data(0.5), info);
         popup.open();
         return popup;

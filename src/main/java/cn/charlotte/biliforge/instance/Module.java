@@ -1,11 +1,12 @@
 package cn.charlotte.biliforge.instance;
 
+import cn.charlotte.biliforge.BiliForge;
 import cn.charlotte.biliforge.interfaces.Listener;
 import cn.charlotte.biliforge.manager.FrameworkManager;
-import cn.charlotte.biliforge.settings.instances.SettingsHolder;
-import cn.charlotte.biliforge.util.mouse.Priority;
-import cn.charlotte.biliforge.util.overlay.Overlay;
+import cn.charlotte.biliforge.overlay.Overlay;
+import lombok.SneakyThrows;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.Logger;
 
 public abstract class Module {
@@ -30,12 +31,14 @@ public abstract class Module {
         FrameworkManager.registerEvents(this, listenerClass);
     }
 
-    public void registerSettings(Class<? extends SettingsHolder> settingsClass) {
-        FrameworkManager.registerSettings(this, settingsClass);
+    @SneakyThrows
+    public void registerSettings(Class settingsClass) {
+        BiliForge.getInstance().getSettingsRegistry().register(settingsClass);
+        settingsClass.getField("INSTANCE").set(null, settingsClass.getConstructor().newInstance());
     }
 
-    public void registerOverlay(Overlay overlay, Priority priority) {
-        FrameworkManager.registerOverlay(this, overlay, priority);
+    public void registerOverlay(Overlay overlay) {
+        MinecraftForge.EVENT_BUS.register(overlay);
     }
 
     public KeyHolder registerKeyBinding(String name, int key, String tab, boolean press, Runnable onPress) {

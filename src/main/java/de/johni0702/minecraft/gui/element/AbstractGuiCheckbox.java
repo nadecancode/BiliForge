@@ -24,6 +24,8 @@
  */
 package de.johni0702.minecraft.gui.element;
 
+import cn.charlotte.biliforge.util.render.colors.CommonColors;
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import de.johni0702.minecraft.gui.GuiRenderer;
 import de.johni0702.minecraft.gui.RenderInfo;
 import de.johni0702.minecraft.gui.container.GuiContainer;
@@ -32,15 +34,13 @@ import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.util.Color;
 import org.lwjgl.util.Dimension;
-import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.ReadableDimension;
 
 public abstract class AbstractGuiCheckbox<T extends AbstractGuiCheckbox<T>>
         extends AbstractGuiClickable<T> implements IGuiCheckbox<T> {
     protected static final ResourceLocation BUTTON_SOUND = new ResourceLocation("gui.button.press");
-    protected static final ReadableColor BOX_BACKGROUND_COLOR = new Color(46, 46, 46);
+    protected static final CustomColor BOX_BACKGROUND_COLOR = new CustomColor(46, 46, 46);
 
     @Getter
     private String label;
@@ -65,7 +65,7 @@ public abstract class AbstractGuiCheckbox<T extends AbstractGuiCheckbox<T>>
         }
 
         int boxSize = size.getHeight();
-        renderer.drawRect(0, 0, boxSize, boxSize, ReadableColor.BLACK);
+        renderer.drawRect(0, 0, boxSize, boxSize, CommonColors.BLACK);
         renderer.drawRect(1, 1, boxSize - 2, boxSize - 2, BOX_BACKGROUND_COLOR);
 
         if (isChecked()) {

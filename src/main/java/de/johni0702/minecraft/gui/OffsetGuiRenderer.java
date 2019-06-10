@@ -24,12 +24,12 @@
  */
 package de.johni0702.minecraft.gui;
 
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import lombok.NonNull;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Point;
-import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.ReadableDimension;
 import org.lwjgl.util.ReadablePoint;
 
@@ -155,7 +155,7 @@ public class OffsetGuiRenderer implements GuiRenderer {
     }
 
     @Override
-    public void drawRect(int x, int y, int width, int height, ReadableColor color) {
+    public void drawRect(int x, int y, int width, int height, CustomColor color) {
         renderer.drawRect(x + position.getX(), y + position.getY(), width, height, color);
     }
 
@@ -165,7 +165,7 @@ public class OffsetGuiRenderer implements GuiRenderer {
     }
 
     @Override
-    public void drawRect(int x, int y, int width, int height, ReadableColor topLeftColor, ReadableColor topRightColor, ReadableColor bottomLeftColor, ReadableColor bottomRightColor) {
+    public void drawRect(int x, int y, int width, int height, CustomColor topLeftColor, CustomColor topRightColor, CustomColor bottomLeftColor, CustomColor bottomRightColor) {
         renderer.drawRect(x + position.getX(), y + position.getY(), width, height, topLeftColor, topRightColor, bottomLeftColor, bottomRightColor);
     }
 
@@ -175,7 +175,7 @@ public class OffsetGuiRenderer implements GuiRenderer {
     }
 
     @Override
-    public int drawString(int x, int y, ReadableColor color, String text) {
+    public int drawString(int x, int y, CustomColor color, String text) {
         return renderer.drawString(x + position.getX(), y + position.getY(), color, text) - position.getX();
     }
 
@@ -185,7 +185,7 @@ public class OffsetGuiRenderer implements GuiRenderer {
     }
 
     @Override
-    public int drawCenteredString(int x, int y, ReadableColor color, String text) {
+    public int drawCenteredString(int x, int y, CustomColor color, String text) {
         return renderer.drawCenteredString(x + position.getX(), y + position.getY(), color, text) - position.getX();
     }
 
@@ -195,7 +195,7 @@ public class OffsetGuiRenderer implements GuiRenderer {
     }
 
     @Override
-    public int drawString(int x, int y, ReadableColor color, String text, boolean shadow) {
+    public int drawString(int x, int y, CustomColor color, String text, boolean shadow) {
         return renderer.drawString(x + position.getX(), y + position.getY(), color, text, shadow) - position.getX();
     }
 
@@ -205,7 +205,7 @@ public class OffsetGuiRenderer implements GuiRenderer {
     }
 
     @Override
-    public int drawCenteredString(int x, int y, ReadableColor color, String text, boolean shadow) {
+    public int drawCenteredString(int x, int y, CustomColor color, String text, boolean shadow) {
         return renderer.drawCenteredString(x + position.getX(), y + position.getY(), color, text, shadow) - position.getX();
     }
 }

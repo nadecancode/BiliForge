@@ -24,28 +24,28 @@
  */
 package de.johni0702.minecraft.gui.element;
 
+import cn.charlotte.biliforge.util.render.colors.CommonColors;
+import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import de.johni0702.minecraft.gui.GuiRenderer;
 import de.johni0702.minecraft.gui.RenderInfo;
 import de.johni0702.minecraft.gui.utils.StringUtils;
 import lombok.Getter;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.I18n;
-import org.lwjgl.util.Color;
 import org.lwjgl.util.Dimension;
-import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.ReadableDimension;
 
 public abstract class AbstractGuiTooltip<T extends AbstractGuiTooltip<T>> extends AbstractGuiElement<T> {
     private static final int LINE_SPACING = 3;
-    private static final ReadableColor BACKGROUND_COLOR = new Color(16, 0, 16, 240);
-    private static final ReadableColor BORDER_LIGHT = new Color(80, 0, 255, 80);
-    private static final ReadableColor BORDER_DARK = new Color(40, 0, 127, 80);
+    private static final CustomColor BACKGROUND_COLOR = new CustomColor(16, 0, 16, 240);
+    private static final CustomColor BORDER_LIGHT = new CustomColor(80, 0, 255, 80);
+    private static final CustomColor BORDER_DARK = new CustomColor(40, 0, 127, 80);
 
     @Getter
     private String[] text = {};
 
     @Getter
-    private ReadableColor color = ReadableColor.WHITE;
+    private CustomColor color = CommonColors.WHITE;
 
     @Override
     public void draw(GuiRenderer renderer, ReadableDimension size, RenderInfo renderInfo) {
@@ -106,7 +106,7 @@ public abstract class AbstractGuiTooltip<T extends AbstractGuiTooltip<T>> extend
         return setText(I18n.format(text, args));
     }
 
-    public T setColor(ReadableColor color) {
+    public T setColor(CustomColor color) {
         this.color = color;
         return getThis();
     }

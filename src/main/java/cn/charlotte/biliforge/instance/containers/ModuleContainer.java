@@ -8,14 +8,8 @@ import cn.charlotte.biliforge.instance.KeyHolder;
 import cn.charlotte.biliforge.instance.Module;
 import cn.charlotte.biliforge.interfaces.annotations.ModuleInfo;
 import cn.charlotte.biliforge.manager.FrameworkManager;
-import cn.charlotte.biliforge.settings.SettingsContainer;
-import cn.charlotte.biliforge.settings.annotations.SettingsInfo;
-import cn.charlotte.biliforge.settings.instances.SettingsHolder;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 public class ModuleContainer {
@@ -24,7 +18,6 @@ public class ModuleContainer {
     Module module;
 
     ArrayList<KeyHolder> keyHolders = new ArrayList<>();
-    HashMap<String, SettingsContainer> registeredSettings = new HashMap<>();
     HashSet<Object> registeredEvents = new HashSet<>();
 
     public ModuleContainer(ModuleInfo info, Module module) {
@@ -69,42 +62,4 @@ public class ModuleContainer {
         registeredEvents.forEach(FrameworkManager.getEventBus()::unregister);
         registeredEvents.clear();
     }
-
-    public void registerSettings(Class<? extends SettingsHolder> holder) {
-        SettingsInfo info = holder.getAnnotation(SettingsInfo.class);
-        if (info == null) {
-            return;
-        }
-
-        for (Field field : holder.getDeclaredFields()) {
-            if (field.getType() == holder && Modifier.isStatic(field.getModifiers())) {
-                try {
-                    field.set(null, holder.getConstructor().newInstance());
-                    registeredSettings.put(info.name(), new SettingsContainer(this, (SettingsHolder) field.get(null)));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return;
-            }
-        }
-    }
-
-    public void registerSettings(String name, SettingsHolder sh) {
-        registeredSettings.put(name, new SettingsContainer(this, sh));
-    }
-
-    public void reloadSettings() {
-        registeredSettings.values().forEach(c -> {
-            try {
-                c.tryToLoad();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    public HashMap<String, SettingsContainer> getRegisteredSettings() {
-        return registeredSettings;
-    }
-
 }

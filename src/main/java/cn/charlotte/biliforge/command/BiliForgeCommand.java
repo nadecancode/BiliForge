@@ -2,8 +2,7 @@ package cn.charlotte.biliforge.command;
 
 import cn.charlotte.biliforge.BiliForge;
 import cn.charlotte.biliforge.color.ChatColor;
-import cn.charlotte.biliforge.settings.ui.OverlayPositionsUI;
-import cn.charlotte.biliforge.settings.ui.SettingsUI;
+import cn.charlotte.biliforge.ui.impl.SettingsUI;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -35,7 +34,7 @@ public class BiliForgeCommand implements ICommand {
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if (args.length <= 0) {
             sender.addChatMessage(wrapComponent(ChatColor.AQUA + "/biliforge settings - 打开配置菜单"));
-            sender.addChatMessage(wrapComponent(ChatColor.AQUA + "/biliforge overlay - 拖动修改界面布局"));
+            //sender.addChatMessage(wrapComponent(ChatColor.AQUA + "/biliforge overlay - 拖动修改界面布局"));
             return;
         }
 
@@ -46,11 +45,12 @@ public class BiliForgeCommand implements ICommand {
                         .schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                SettingsUI ui = new SettingsUI(BiliForge.getInstance().getMinecraft().currentScreen);
-                                ui.show();
+                                SettingsUI ui = new SettingsUI(BiliForge.getInstance().getMinecraft().currentScreen, BiliForge.getInstance().getSettingsRegistry());
+                                ui.display();
                             }
                         }, 50L);
                 break;
+                /*
             case "overlay":
                 BiliForge.getInstance()
                         .getTimer()
@@ -62,6 +62,8 @@ public class BiliForgeCommand implements ICommand {
                             }
                         }, 50L);
                 break;
+
+                 */
         }
     }
 

@@ -1,6 +1,6 @@
 package cn.charlotte.biliforge.util.update;
 
-import cn.charlotte.biliforge.BiliForge;
+import cn.charlotte.biliforge.Reference;
 import cn.charlotte.biliforge.util.download.EagletTask;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class GithubUpdater {
 
     @SneakyThrows
     public boolean update(boolean download) {
-        String version = BiliForge.getInstance().VERSION;
+        String version = Reference.MOD_VERSION;
         String parseVersion = version.toLowerCase()
                 .replace("beta", "")
                 .replace("snapshot", "")
@@ -57,7 +57,7 @@ public class GithubUpdater {
                 EagletTask eagletTask = new EagletTask()
                         .url(downloadURL)
                         .setThreads(5)
-                        .file(BiliForge.MOD_STORAGE_ROOT.getPath() + "/BiliForge-" + githubUpdate.getTag() + ".jar")
+                        .file(Reference.MOD_STORAGE_ROOT.getPath() + "/BiliForge-" + githubUpdate.getTag() + ".jar")
                         .start();
                 //TODO 用GUI呈现下载进度
                 return true;

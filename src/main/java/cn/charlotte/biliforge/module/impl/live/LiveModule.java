@@ -6,7 +6,6 @@ import cn.charlotte.biliforge.module.impl.live.listener.LiveListener;
 import cn.charlotte.biliforge.module.impl.live.object.Live;
 import cn.charlotte.biliforge.module.impl.live.overlay.LiveOverlay;
 import cn.charlotte.biliforge.module.impl.live.settings.LiveModuleConfig;
-import cn.charlotte.biliforge.util.mouse.Priority;
 import lombok.Getter;
 
 import java.util.concurrent.ExecutorService;
@@ -29,7 +28,7 @@ public class LiveModule extends Module {
     public void onEnable() {
         liveModule = this;
         this.registerSettings(LiveModuleConfig.class);
-        this.registerOverlay(new LiveOverlay(), Priority.NORMAL);
+        this.registerOverlay(new LiveOverlay());
         this.live = new Live();
     }
 
@@ -39,7 +38,7 @@ public class LiveModule extends Module {
     }
 
     public void update() {
-        this.liveListener = new LiveListener(LiveModuleConfig.INSTANCE.roomId);
+        this.liveListener = new LiveListener(LiveModuleConfig.INSTANCE.roomId.getValue());
         this.live.reset();
         if (this.futureTask != null) this.futureTask.cancel(true);
         this.futureTask = this.executorService.submit(liveListener);

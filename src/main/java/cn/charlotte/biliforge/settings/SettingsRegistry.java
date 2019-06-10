@@ -1,5 +1,6 @@
 package cn.charlotte.biliforge.settings;
 
+import cn.charlotte.biliforge.BiliForge;
 import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.common.config.Configuration;
@@ -8,13 +9,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Pattern;
 
 public class SettingsRegistry {
     private static final Object NULL_OBJECT = new Object();
-    private Map<SettingKey<?>, Object> settings = new ConcurrentHashMap<>();
+    private static Map<SettingKey<?>, Object> settings = new ConcurrentHashMap<>();
     private Configuration configuration;
-    private static final Pattern COLOR_HEX = Pattern.compile("(^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)");
 
     public void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
@@ -38,7 +37,6 @@ public class SettingsRegistry {
             }
         }
     }
-
     public void register(SettingKey<?> key) {
         Object value;
         if (configuration != null) {
@@ -111,6 +109,17 @@ public class SettingsRegistry {
         String getDescription();
 
         T getDefault();
+
+        default void onChanged() {
+        }
+
+        default T getValue() {
+            return BiliForge.getInstance().getSettingsRegistry().get(this);
+        }
+
+        default void setValue(T value) {
+            BiliForge.getInstance().getSettingsRegistry().set(this, value);
+        }
     }
 
     public interface MultipleChoiceSettingKey<T> extends SettingKey<T> {

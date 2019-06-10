@@ -24,6 +24,7 @@
  */
 package de.johni0702.minecraft.gui.popup;
 
+import cn.charlotte.biliforge.util.render.colors.CommonColors;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
 import de.johni0702.minecraft.gui.GuiRenderer;
@@ -40,7 +41,6 @@ import de.johni0702.minecraft.gui.function.Typeable;
 import de.johni0702.minecraft.gui.layout.CustomLayout;
 import de.johni0702.minecraft.gui.layout.HorizontalLayout;
 import de.johni0702.minecraft.gui.layout.VerticalLayout;
-import de.johni0702.minecraft.gui.utils.Colors;
 import de.johni0702.minecraft.gui.utils.Consumer;
 import lombok.Getter;
 import org.lwjgl.input.Keyboard;
@@ -134,14 +134,14 @@ public class GuiFileChooserPopup extends AbstractGuiPopup<GuiFileChooserPopup> i
     }
 
     public static GuiFileChooserPopup openSaveGui(GuiContainer container, String buttonLabel, String... fileExtensions) {
-        GuiFileChooserPopup popup = new GuiFileChooserPopup(container, fileExtensions, false).setBackgroundColor(Colors.DARK_TRANSPARENT);
+        GuiFileChooserPopup popup = new GuiFileChooserPopup(container, fileExtensions, false).setBackgroundColor(CommonColors.DARK_TRANSPARENT);
         popup.acceptButton.setI18nLabel(buttonLabel);
         popup.open();
         return popup;
     }
 
     public static GuiFileChooserPopup openLoadGui(GuiContainer container, String buttonLabel, String... fileExtensions) {
-        GuiFileChooserPopup popup = new GuiFileChooserPopup(container, fileExtensions, true).setBackgroundColor(Colors.DARK_TRANSPARENT);
+        GuiFileChooserPopup popup = new GuiFileChooserPopup(container, fileExtensions, true).setBackgroundColor(CommonColors.DARK_TRANSPARENT);
         popup.acceptButton.setI18nLabel(buttonLabel).setDisabled();
         popup.open();
         return popup;

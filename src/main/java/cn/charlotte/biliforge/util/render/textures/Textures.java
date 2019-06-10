@@ -4,7 +4,7 @@
 
 package cn.charlotte.biliforge.util.render.textures;
 
-import cn.charlotte.biliforge.BiliForge;
+import cn.charlotte.biliforge.Reference;
 import net.minecraft.util.ResourceLocation;
 
 import java.lang.reflect.Field;
@@ -21,7 +21,7 @@ public class Textures {
 
 
         for (Class<?> clazz : textureClasses) {
-            String path = BiliForge.MODID + ":textures/" + clazz.getName().split("\\$")[1].toLowerCase() + "/";
+            String path = Reference.MOD_ID + ":textures/" + clazz.getName().split("\\$")[1].toLowerCase() + "/";
             for (Field f : clazz.getDeclaredFields()) {
                 try {
                     if (f.get(null) == null && f.getType().isAssignableFrom(AssetsTexture.class)) {

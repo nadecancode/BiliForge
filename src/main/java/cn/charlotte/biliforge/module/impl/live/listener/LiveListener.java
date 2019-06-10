@@ -27,7 +27,7 @@ public class LiveListener extends DanmakuAdapter implements Runnable {
 
     @Override
     public void run() {
-        if (!LiveModuleConfig.INSTANCE.live) return;
+        if (!LiveModuleConfig.INSTANCE.live.getValue()) return;
         try {
             if (receiver != null) receiver.disconnect();
         } catch (Exception ex) { /* Just ignore that */ }

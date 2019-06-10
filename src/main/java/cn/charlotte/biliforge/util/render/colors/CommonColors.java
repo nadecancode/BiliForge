@@ -4,6 +4,8 @@
 
 package cn.charlotte.biliforge.util.render.colors;
 
+import de.johni0702.minecraft.gui.utils.Colors;
+
 public class CommonColors {
 
     public static final CustomColor BLACK = CustomColor.fromString("000000", 1);
@@ -25,4 +27,6 @@ public class CommonColors {
     public static final CustomColor RAINBOW = new CustomColor(-10, -10, -10);
     public static final CustomColor TRANSPARENT = new CustomColor(0, 0, 0, 0);
     public static final CustomColor LTGREY = new CustomColor(192, 192, 192);
+    public static final CustomColor DARK_TRANSPARENT = new CustomColor(Colors.DARK_TRANSPARENT);
+
 }

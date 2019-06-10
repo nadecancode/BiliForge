@@ -24,6 +24,7 @@
  */
 package de.johni0702.minecraft.gui.popup;
 
+import cn.charlotte.biliforge.util.render.colors.CommonColors;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
 import de.johni0702.minecraft.gui.container.GuiContainer;
@@ -33,7 +34,6 @@ import de.johni0702.minecraft.gui.element.GuiElement;
 import de.johni0702.minecraft.gui.function.Typeable;
 import de.johni0702.minecraft.gui.layout.HorizontalLayout;
 import de.johni0702.minecraft.gui.layout.VerticalLayout;
-import de.johni0702.minecraft.gui.utils.Colors;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -81,7 +81,7 @@ public class GuiYesNoPopup extends AbstractGuiPopup<GuiYesNoPopup> implements Ty
     }
 
     public static GuiYesNoPopup open(GuiContainer container, GuiElement... info) {
-        GuiYesNoPopup popup = new GuiYesNoPopup(container).setBackgroundColor(Colors.DARK_TRANSPARENT);
+        GuiYesNoPopup popup = new GuiYesNoPopup(container).setBackgroundColor(CommonColors.DARK_TRANSPARENT);
         popup.getInfo().addElements(new VerticalLayout.Data(0.5), info);
         popup.open();
         return popup;
