@@ -2,11 +2,11 @@ package cn.charlotte.biliforge.settings;
 
 import cn.charlotte.biliforge.BiliForge;
 import cn.charlotte.biliforge.util.render.colors.CustomColor;
+import lombok.SneakyThrows;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.common.config.Configuration;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -25,15 +25,14 @@ public class SettingsRegistry {
         }
     }
 
+    @SneakyThrows
     public void register(Class<?> settingsClass) {
+        Object settingInstance = settingsClass.newInstance();
+        Field instanceField = settingInstance.getClass().getField("INSTANCE");
+        instanceField.set(null, settingInstance);
         for (Field field : settingsClass.getDeclaredFields()) {
-            if ((field.getModifiers() & (Modifier.STATIC | Modifier.PUBLIC)) != 0
-                    && SettingKey.class.isAssignableFrom(field.getType())) {
-                try {
-                    register((SettingKey<?>) field.get(null));
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
+            if (SettingKey.class.isAssignableFrom(field.getType())) {
+                register((SettingKey<?>) field.get(settingInstance));
             }
         }
     }

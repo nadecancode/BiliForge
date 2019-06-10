@@ -34,7 +34,6 @@ public abstract class Module {
     @SneakyThrows
     public void registerSettings(Class settingsClass) {
         BiliForge.getInstance().getSettingsRegistry().register(settingsClass);
-        settingsClass.getField("INSTANCE").set(null, settingsClass.getConstructor().newInstance());
     }
 
     public void registerOverlay(Overlay overlay) {
