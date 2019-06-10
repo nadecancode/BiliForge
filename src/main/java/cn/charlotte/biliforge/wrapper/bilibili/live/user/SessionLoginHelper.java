@@ -5,12 +5,10 @@ import cn.charlotte.biliforge.wrapper.bilibili.live.Globals;
 import cn.charlotte.biliforge.wrapper.bilibili.live.OptionalGlobals;
 import cn.charlotte.biliforge.wrapper.bilibili.live.exceptions.BiliLiveException;
 import cn.charlotte.biliforge.wrapper.bilibili.live.exceptions.NetworkException;
-import cn.charlotte.biliforge.wrapper.bilibili.live.exceptions.WrongCaptchaException;
 import cn.charlotte.biliforge.wrapper.bilibili.live.internalutil.ResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.IncorrectnessListenerImpl;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.util.Cookie;
 import com.google.gson.Gson;
@@ -22,7 +20,6 @@ import org.apache.http.client.CookieStore;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Set;
@@ -191,48 +188,6 @@ public class SessionLoginHelper {
         int errorCode = rootObject.get("message").getAsJsonObject()
                 .get("code").getAsInt();
         status = LoginStatus.forCode(errorCode);
-    }
-
-    /**
-     * 刷新并获取验证码。
-     *
-     * @return 验证码
-     * @throws NetworkException 在发生网络问题时抛出
-     */
-    public Image getCaptcha() throws BiliLiveException {
-        try {
-            HtmlImage image = (HtmlImage) miniLoginPage.getByXPath("//img[@class='captcha-img']").get(0);
-            image.click(); // Click to refresh.
-            return image.getImageReader().read(0);
-        } catch (IOException ex) {
-            throw new NetworkException("IO Exception", ex);
-        }
-    }
-
-    /**
-     * 使用给定验证码进行登录。登录结果保存在本类中。
-     *
-     * @param captcha 验证码
-     * @throws NetworkException      在发生网络问题时抛出
-     * @throws WrongCaptchaException 在验证码错误时抛出
-     */
-    public void loginWithCaptcha(String captcha) throws BiliLiveException {
-        try {
-            miniLoginPage.getElementById("login-username").setAttribute("value", email);
-            miniLoginPage.getElementById("login-passwd").setAttribute("value", password);
-            miniLoginPage.getElementById("login-captcha").setAttribute("value", captcha);
-
-            // This operation will block to wait until ajax performs completely.
-            // Thanks to NicelyResynchronizingAjaxController.
-            miniLoginPage.getHtmlElementById("login-submit").click();
-            if (status == WRONG_CAPTCHA) throw new WrongCaptchaException();
-
-            // WARNING: USED Experimental API HERE!
-            // webClient.waitForBackgroundJavaScript(loginTimeoutMillis);
-            // Needn't this if we use NicelyResynchronizingAjaxController. See SessionLoginHelper().
-        } catch (IOException ex) {
-            throw new NetworkException("IO Exception", ex);
-        }
     }
 
     /**
