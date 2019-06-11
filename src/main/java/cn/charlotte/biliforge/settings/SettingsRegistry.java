@@ -2,6 +2,7 @@ package cn.charlotte.biliforge.settings;
 
 import cn.charlotte.biliforge.BiliForge;
 import cn.charlotte.biliforge.util.render.colors.CustomColor;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.common.config.Configuration;
@@ -13,6 +14,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SettingsRegistry {
     private static final Object NULL_OBJECT = new Object();
     private static Map<SettingKey<?>, Object> settings = new ConcurrentHashMap<>();
+
+    @Getter
+    private static Map<SettingInfo, List<SettingKey>> settingClasses = new ConcurrentHashMap<>();
+
     private Configuration configuration;
 
     public void setConfiguration(Configuration configuration) {
@@ -27,14 +32,23 @@ public class SettingsRegistry {
 
     @SneakyThrows
     public void register(Class<?> settingsClass) {
+        if (!settingsClass.isAnnotationPresent(SettingInfo.class)) return;
+
+        SettingInfo settingInfo = settingsClass.getAnnotation(SettingInfo.class);
+
         Object settingInstance = settingsClass.newInstance();
         Field instanceField = settingInstance.getClass().getField("INSTANCE");
         instanceField.set(null, settingInstance);
+        List<SettingKey> settingsKeys = new ArrayList<>();
         for (Field field : settingsClass.getDeclaredFields()) {
             if (SettingKey.class.isAssignableFrom(field.getType())) {
-                register((SettingKey<?>) field.get(settingInstance));
+                SettingKey settingKey = (SettingKey<?>) field.get(settingInstance);
+                register(settingKey);
+                settingsKeys.add(settingKey);
             }
         }
+
+        settingClasses.put(settingInfo, settingsKeys);
     }
     public void register(SettingKey<?> key) {
         Object value;
@@ -63,6 +77,10 @@ public class SettingsRegistry {
 
     public Set<SettingKey<?>> getSettings() {
         return settings.keySet();
+    }
+
+    public Map<SettingInfo, List<SettingKey>> getSettingMappings() {
+        return settingClasses;
     }
 
     @SuppressWarnings("unchecked")

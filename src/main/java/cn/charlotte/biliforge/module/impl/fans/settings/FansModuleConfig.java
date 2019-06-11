@@ -39,4 +39,20 @@ public class FansModuleConfig {
             "显示字体是否附带阴影",
             false
     );
+
+    public SettingsRegistry.SettingKeys<Integer> positionX = new SettingsRegistry.SettingKeys<>(
+            "fans.position",
+            "positionX",
+            "X轴位置",
+            "信息显示位置的X轴",
+            100
+    );
+
+    public SettingsRegistry.SettingKeys<Integer> positionY = new SettingsRegistry.SettingKeys<>(
+            "fans.position",
+            "positionY",
+            "Y轴位置",
+            "信息显示位置的Y轴",
+            100
+    );
 }
