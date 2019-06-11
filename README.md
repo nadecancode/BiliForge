@@ -28,12 +28,12 @@
 <a name = "statistics"></a>
 项目统计
 ---
-[![](https://img.shields.io/github/downloads/ThatKawaiiAllen/BiliForge/total.svg?style=flat-square)](https://github.com/ThatKawaiiAllen/BiliForge/releases)
-[![](https://img.shields.io/github/issues/ThatKawaiiAllen/BiliForge.svg?style=flat-square)](https://github.com/ThatKawaiiAllen/BiliForge/issues)
-[![](https://img.shields.io/github/forks/ThatKawaiiAllen/BiliForge.svg?style=flat-square)](https://github.com/ThatKawaiiAllen/BiliForge/network/members)
-[![](https://img.shields.io/github/release/ThatKawaiiAllen/BiliForge.svg?style=flat-square)](https://github.com/ThatKawaiiAllen/BiliForge/tags)
-[![](https://img.shields.io/github/stars/ThatKawaiiAllen/BiliForge.svg?style=flat-square)](https://github.com/ThatKawaiiAllen/BiliForge/stargazers)
-[![](https://img.shields.io/github/license/ThatKawaiiAllen/BiliForge.svg?style=flat-square)](https://github.com/ThatKawaiiAllen/BiliForge/blob/master/LICENSE)
+[![](https://img.shields.io/github/downloads/TheTsundereAllen/BiliForge/total.svg?style=flat-square)](https://github.com/TheTsundereAllen/BiliForge/releases)
+[![](https://img.shields.io/github/issues/TheTsundereAllen/BiliForge.svg?style=flat-square)](https://github.com/TheTsundereAllen/BiliForge/issues)
+[![](https://img.shields.io/github/forks/TheTsundereAllen/BiliForge.svg?style=flat-square)](https://github.com/TheTsundereAllen/BiliForge/network/members)
+[![](https://img.shields.io/github/release/TheTsundereAllen/BiliForge.svg?style=flat-square)](https://github.com/TheTsundereAllen/BiliForge/tags)
+[![](https://img.shields.io/github/stars/TheTsundereAllen/BiliForge.svg?style=flat-square)](https://github.com/TheTsundereAllen/BiliForge/stargazers)
+[![](https://img.shields.io/github/license/TheTsundereAllen/BiliForge.svg?style=flat-square)](https://github.com/TheTsundereAllen/BiliForge/blob/master/LICENSE)
 ---
 
 <a name = "download"></a>
@@ -62,7 +62,7 @@
 项目贡献者
 ---
 [EmptyIrony](https://github.com/EmptyIrony) - 最初的项目本体 <br/>
-[ThatKawaiiAllen](https://github.com/ThatKawaiiAllen) - 项目主体
+[TheTsundereAllen](https://github.com/TheTsundereAllen) - 项目主体
 ---
 
 <a name = "license"></a>
