@@ -42,11 +42,11 @@ public class FansOverlay extends Overlay {
             String[] multiLines = display.split("%next%");
             int currentY = 0;
             for (String line : multiLines) {
-                drawString(line, this.getX(), this.getY() + 10 + currentY, FansModuleConfig.INSTANCE.chroma.getValue() ? CommonColors.RAINBOW : FansModuleConfig.INSTANCE.overlayColor.getValue(), SmartFontRenderer.TextAlignment.MIDDLE, FansModuleConfig.INSTANCE.shadow.getValue() ? SmartFontRenderer.TextShadow.OUTLINE : SmartFontRenderer.TextShadow.NORMAL);
+                drawString(line, FansModuleConfig.INSTANCE.positionX.getValue(), FansModuleConfig.INSTANCE.positionY.getValue() + 10 + currentY, FansModuleConfig.INSTANCE.chroma.getValue() ? CommonColors.RAINBOW : FansModuleConfig.INSTANCE.overlayColor.getValue(), SmartFontRenderer.TextAlignment.MIDDLE, FansModuleConfig.INSTANCE.shadow.getValue() ? SmartFontRenderer.TextShadow.OUTLINE : SmartFontRenderer.TextShadow.NORMAL);
                 currentY += 10;
             }
         } else {
-            drawString(display, this.getX(), this.getY(), FansModuleConfig.INSTANCE.chroma.getValue() ? CommonColors.RAINBOW : FansModuleConfig.INSTANCE.overlayColor.getValue(), SmartFontRenderer.TextAlignment.LEFT_RIGHT, FansModuleConfig.INSTANCE.shadow.getValue() ? SmartFontRenderer.TextShadow.OUTLINE : SmartFontRenderer.TextShadow.NORMAL);
+            drawString(display, FansModuleConfig.INSTANCE.positionX.getValue(), FansModuleConfig.INSTANCE.positionY.getValue(), FansModuleConfig.INSTANCE.chroma.getValue() ? CommonColors.RAINBOW : FansModuleConfig.INSTANCE.overlayColor.getValue(), SmartFontRenderer.TextAlignment.LEFT_RIGHT, FansModuleConfig.INSTANCE.shadow.getValue() ? SmartFontRenderer.TextShadow.OUTLINE : SmartFontRenderer.TextShadow.NORMAL);
         }
 
     }

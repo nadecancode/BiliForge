@@ -1,6 +1,7 @@
 package cn.charlotte.biliforge.settings;
 
 import cn.charlotte.biliforge.BiliForge;
+import cn.charlotte.biliforge.color.ChatColor;
 import cn.charlotte.biliforge.util.render.colors.CustomColor;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -170,7 +171,7 @@ public class SettingsRegistry {
 
         @Override
         public String getDisplayString() {
-            return displayString == null ? null : I18n.format(displayString);
+            return displayString == null ? null : ChatColor.WHITE + I18n.format(displayString);
         }
 
         @Override

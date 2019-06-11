@@ -2,8 +2,10 @@ package cn.charlotte.biliforge.module.impl.live.settings;
 
 import cn.charlotte.biliforge.BiliForge;
 import cn.charlotte.biliforge.module.impl.live.LiveModule;
+import cn.charlotte.biliforge.settings.SettingInfo;
 import cn.charlotte.biliforge.settings.SettingsRegistry;
 
+@SettingInfo(name = "Live")
 public class LiveModuleConfig {
 
     public static LiveModuleConfig INSTANCE;
@@ -52,4 +54,20 @@ public class LiveModuleConfig {
             "Gift Format",
             "送礼物的格式, {name} 为用户名称, {uid} 为用户UID, {gift} 为礼物名称, {count} 为礼物数量, {price} 为礼物价格",
             "&f{name}&7为欧尼酱大人送出了 &f{gift} &7x&f{count}&f哟");
+
+    public SettingsRegistry.SettingKeys<Integer> positionX = new SettingsRegistry.SettingKeys<>(
+            "fans.position",
+            "positionX",
+            "X轴位置",
+            "信息显示位置的X轴",
+            100
+    );
+
+    public SettingsRegistry.SettingKeys<Integer> positionY = new SettingsRegistry.SettingKeys<>(
+            "fans.position",
+            "positionY",
+            "Y轴位置",
+            "信息显示位置的Y轴",
+            100
+    );
 }

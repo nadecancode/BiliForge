@@ -1,8 +1,10 @@
 package cn.charlotte.biliforge.module.impl.core.settings;
 
 import cn.charlotte.biliforge.module.impl.core.CoreModule;
+import cn.charlotte.biliforge.settings.SettingInfo;
 import cn.charlotte.biliforge.settings.SettingsRegistry;
 
+@SettingInfo(name = "Core")
 public class CoreModuleConfig {
 
     public static CoreModuleConfig INSTANCE;

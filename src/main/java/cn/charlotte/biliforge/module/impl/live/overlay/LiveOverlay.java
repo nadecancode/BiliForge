@@ -15,6 +15,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LiveOverlay extends Overlay {
 
+    public LiveOverlay() {
+        super(LiveModuleConfig.INSTANCE.positionX.getValue(), LiveModuleConfig.INSTANCE.positionY.getValue());
+    }
+
     @SubscribeEvent
     public void render(RenderGameOverlayEvent event) {
         if (!LiveModuleConfig.INSTANCE.live.getValue()) return;
@@ -55,7 +59,7 @@ public class LiveOverlay extends Overlay {
             }
 
             if (display != null) {
-                drawString(display, 100, 100 - 4 - 10 + currentY, CommonColors.WHITE, SmartFontRenderer.TextAlignment.LEFT_RIGHT, SmartFontRenderer.TextShadow.NORMAL);
+                drawString(display, LiveModuleConfig.INSTANCE.positionX.getValue(), LiveModuleConfig.INSTANCE.positionY.getValue() - 4 - 10 + currentY, CommonColors.WHITE, SmartFontRenderer.TextAlignment.LEFT_RIGHT, SmartFontRenderer.TextShadow.NORMAL);
                 currentY += 10;
             }
         }

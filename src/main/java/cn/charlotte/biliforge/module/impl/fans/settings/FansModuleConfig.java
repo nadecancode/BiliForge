@@ -1,9 +1,11 @@
 package cn.charlotte.biliforge.module.impl.fans.settings;
 
+import cn.charlotte.biliforge.settings.SettingInfo;
 import cn.charlotte.biliforge.settings.SettingsRegistry;
 import cn.charlotte.biliforge.util.render.colors.CommonColors;
 import cn.charlotte.biliforge.util.render.colors.CustomColor;
 
+@SettingInfo(name = "Fans")
 public class FansModuleConfig {
 
     public static FansModuleConfig INSTANCE;
